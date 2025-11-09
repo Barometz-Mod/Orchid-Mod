@@ -59,6 +59,8 @@ namespace OrchidMod.Content.Guardian
 			OldPosition = new List<Vector2>();
 			OldRotation = new List<float>();
 			BlockedNPCs = new List<int>();
+
+			MoRSupportUtils.SetHammerBonus(Projectile);
 		}
 
 		public override void OnSpawn(IEntitySource source)

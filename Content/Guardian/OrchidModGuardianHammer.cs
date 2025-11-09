@@ -5,6 +5,7 @@ using OrchidMod.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -46,6 +47,11 @@ namespace OrchidMod.Content.Guardian
 		/// <remarks>Remember to set <c>Projectile.friendly</c> and <c>OrchidModGuardianProjectile.ResetHitStatus()</c> if overriding default behavior.</remarks>
 		public virtual bool ThrowAI(Player player, OrchidGuardian guardian, Projectile projectile, bool Weak) => true;
 
+		public sealed override void SetStaticDefaults()
+		{
+			SafeSetStaticDefaults();
+		}
+
 		public sealed override void SetDefaults()
 		{
 			Item.DamageType = GetInstance<GuardianDamageClass>();
@@ -78,6 +84,8 @@ namespace OrchidMod.Content.Guardian
 			SafeSetDefaults();
 
 			Item.useAnimation = Item.useTime;
+
+			MoRSupportUtils.SetHammerBonus(Item);
 		}
 
 		public override bool AltFunctionUse(Player player)
@@ -98,7 +106,7 @@ namespace OrchidMod.Content.Guardian
 			var guardian = player.GetModPlayer<OrchidGuardian>();
 			int projType = ProjectileType<GuardianHammerAnchor>();
 			int damage = guardian.GetGuardianDamage(Item.damage);
-			Projectile projectile = Projectile.NewProjectileDirect(Item.GetSource_FromThis(), player.Center, Vector2.Zero, projType, damage, Item.knockBack, player.whoAmI);
+			Projectile projectile = Projectile.NewProjectileDirect(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, projType, damage, Item.knockBack, player.whoAmI);
 			projectile.CritChance = (int)(player.GetCritChance<GuardianDamageClass>() + player.GetCritChance<GenericDamageClass>() + Item.crit);
 
 			if (Main.mouseRight && Main.mouseRightRelease && projectile.ModProjectile is GuardianHammerAnchor anchor && guardian.UseGuard(1, true))

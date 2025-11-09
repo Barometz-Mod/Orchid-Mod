@@ -13,6 +13,13 @@ namespace OrchidMod.Content.Guardian
 	{
 		public bool IsLocalPlayer(Player player) => player.whoAmI == Main.myPlayer;
 
+		public virtual void SafeSetStaticDefaults() { }
+
+		public override void SetStaticDefaults()
+		{
+			SafeSetStaticDefaults();
+		}
+		
 		public virtual void SafeSetDefaults() { }
 
 		public override void SetDefaults()
