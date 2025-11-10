@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using OrchidMod.Utilities;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -6,6 +7,11 @@ namespace OrchidMod.Content.Guardian.Weapons.Runes
 {
 	public class LivingRune : OrchidModGuardianRune
 	{
+		public override void SafeSetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Arcane);
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Nature);
+		}
 
 		public override void SafeSetDefaults()
 		{

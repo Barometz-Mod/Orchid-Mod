@@ -1,4 +1,5 @@
 ﻿using Terraria;
+using Terraria.Localization;
 
 namespace OrchidMod.Utilities
 {
@@ -50,7 +51,7 @@ namespace OrchidMod.Utilities
 		}
 
 		/// <summary>
-		/// <para>Registers a projectile under a given <a href="https://modofredemption.wiki.gg/wiki/Elemental_damage">MoR element</a>, applying damage multipliers based on the element and enemy type, and other unique effects based on the element.</para>
+		/// <para>Registers a projectile under a given <a href="https://modofredemption.wiki.gg/wiki/Elemental_damage">element</a>, applying damage multipliers based on the element and enemy type, and other unique effects based on the element.</para>
 		/// <para>To be called in <see cref="Projectile.SetStaticDefaults()"/>.</para>
 		/// </summary>
 		/// <param name="projectile">The Projectile to apply the element to.</param>
@@ -196,8 +197,49 @@ namespace OrchidMod.Utilities
 			redemptionMod.Call("setSpearProj", projectile, bonus);
 		}
 
+		/// <summary>
+		/// <para>Increases or decreases a player's resistance to a given MoR element, similar to other player stats.</para>
+		/// </summary>
+		/// <param name="player">The Player affected.</param>
+		/// <param name="elementId">The ID of the element to apply. Use <see cref="MoRSupportHelper">MoRSupportHelper</see> consts (ex. <see cref="Elements.Fire">MoRSupportHelper.Elements.Fire</see>).</param>
+		/// <param name="resistance">The resistance increase; e.g. 0.1f would be 10% increase, -0.25f would be a 25% decrease.</param>
+		public static void IncreaseElementalResistance(Player player, int elementId, float resistance)
+		{
+			var redemptionMod = OrchidMod.ModOfRedemption;
+			if (redemptionMod == null) return;
+
+			redemptionMod.Call("increaseElementalResistance", player, elementId, resistance);
+		}
+
+		/// <summary>
+		/// <para>Returns the stylized tooltip for an element, which includes an icon and colored text.</para>
+		/// </summary>
+		/// <param name="elementId">The ID of the element. Use <see cref="MoRSupportHelper">MoRSupportHelper</see> consts (ex. <see cref="Elements.Fire">MoRSupportHelper.Elements.Fire</see>).</param>
+		public static string GetElementTooltip(short elementId)
+		{
+			var elementName = elementId switch
+			{
+				Elements.Fire => "Fire",
+				Elements.Water => "Water",
+				Elements.Ice => "Ice",
+				Elements.Earth => "Earth",
+				Elements.Wind => "Wind",
+				Elements.Thunder => "Thunder",
+				Elements.Holy => "Holy",
+				Elements.Shadow => "Shadow",
+				Elements.Nature => "Nature",
+				Elements.Poison => "Poison",
+				Elements.Blood => "Blood",
+				Elements.Psychic => "Psychic",
+				Elements.Celestial => "Celestial",
+				Elements.Explosive => "Explosive",
+				_ => "Arcane",
+			};
+			return Language.GetTextValue($"Mods.{OrchidMod.ModOfRedemption.Name}.Items.{elementName}.DisplayName");
+		}
+
 		/////
-		
+
 		// For testing
 		public static int GetFirstElementProj(Projectile projectile)
 		{

@@ -1,10 +1,16 @@
-﻿using Terraria;
+﻿using OrchidMod.Utilities;
+using Terraria;
 using Terraria.ID;
 
 namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 {
 	public class BambooQuarterstaff : OrchidModGuardianQuarterstaff
 	{
+		public override void SafeSetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Nature);
+		}
+		
 		public override void SafeSetDefaults()
 		{
 			Item.width = 42;

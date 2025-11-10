@@ -4750,6 +4750,8 @@ UI: {
 		UnknownReaction: Неизвестная реакция
 		Page: Стр.: {0}/{1}
 	}
+
+	// RedemptionSupport.Resistance: "{0}% increased {1} elemental resistance"
 }
 
 DamageClasses: {

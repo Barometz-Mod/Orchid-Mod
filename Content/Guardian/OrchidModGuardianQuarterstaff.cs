@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -35,6 +36,7 @@ namespace OrchidMod.Content.Guardian
 		public virtual Color GetColor(bool offHand) => Color.White;
 
 		public virtual void SafeHoldItem(Player player) { }
+		public virtual void SafeModifyTooltips(List<TooltipLine> tooltips) { }
 
 		public int ParryDuration = 60; // Parry duration in ticks
 		public int SlamStacks; // Stam Stacks given by the item
@@ -58,6 +60,11 @@ namespace OrchidMod.Content.Guardian
 		//public bool SingleSwing = false; // allows a special swing behaviour
 		/// <summary>Multiplier for the amount of bonus charge gained from hitting with a jab.</summary>
 		public float JabChargeGain = 1;
+
+		public sealed override void SetStaticDefaults()
+		{
+			SafeSetStaticDefaults();
+		}
 
 		public sealed override void SetDefaults()
 		{
@@ -156,7 +163,7 @@ namespace OrchidMod.Content.Guardian
 					}
 				}
 
-				var index = Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center.X, player.Center.Y, 0f, 0f, projectileType, 0, 0f, player.whoAmI);
+				var index = Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center.X, player.Center.Y, 0f, 0f, projectileType, 0, 0f, player.whoAmI);
 
 				var proj = Main.projectile[index];
 				if (proj.ModProjectile is not GuardianQuarterstaffAnchor quarterstaff)
@@ -225,6 +232,8 @@ namespace OrchidMod.Content.Guardian
 					OverrideColor = new Color(175, 255, 175)
 				});
 			}
+
+			SafeModifyTooltips(tooltips);
 		}
 	}
 }

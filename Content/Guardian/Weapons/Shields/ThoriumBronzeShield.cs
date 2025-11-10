@@ -13,7 +13,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 	public class ThoriumBronzeShield : OrchidModGuardianShield
 	{
 		public static Texture2D TextureAura;
-		public override void SetStaticDefaults()
+		public override void SafeSetStaticDefaults()
 		{
 			TextureAura ??= ModContent.Request<Texture2D>("OrchidMod/Content/Guardian/StandardAuraProjectile", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 		}

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -46,6 +47,11 @@ namespace OrchidMod.Content.Guardian
 		/// <summary>Causes the shield's held sprite to flip when facing right.</summary>
 		public bool shouldFlip = false;
 		public bool slamAutoReuse = true;
+
+		public sealed override void SetStaticDefaults()
+		{
+			SafeSetStaticDefaults();
+		}
 
 		public sealed override void SetDefaults()
 		{
@@ -186,7 +192,7 @@ namespace OrchidMod.Content.Guardian
 
 			if (player.ownedProjectileCounts[projectileType] == 0)
 			{
-				var index = Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center.X, player.Center.Y, 0f, 0f, projectileType, 0, 0f, player.whoAmI);
+				var index = Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center.X, player.Center.Y, 0f, 0f, projectileType, 0, 0f, player.whoAmI);
 
 				var proj = Main.projectile[index];
 				if (proj.ModProjectile is not GuardianShieldAnchor shield)
