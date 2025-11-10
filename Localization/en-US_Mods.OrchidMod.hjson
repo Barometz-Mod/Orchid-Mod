@@ -4733,6 +4733,11 @@ UI: {
 		UnknownReaction: Unknown Reaction
 		Page: Page {0}/{1}
 	}
+
+	RedemptionSupport: {
+		Resistance: "{0}% increased {1} elemental resistance"
+		ResistanceHeld: "{0}% increased {1} elemental resistance while held"
+	}
 }
 
 DamageClasses: {

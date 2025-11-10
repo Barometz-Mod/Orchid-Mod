@@ -1,14 +1,19 @@
 ﻿using Microsoft.Xna.Framework;
 using OrchidMod.Common.Global.NPCs;
 using OrchidMod.Content.Guardian.Buffs.Debuffs;
+using OrchidMod.Utilities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 {
 	public class HockeyQuarterstaff : OrchidModGuardianQuarterstaff
 	{
+		private static readonly float MoRElementResistance = 0.1f;
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 54;
@@ -25,6 +30,12 @@ namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 			JabSpeed = 1.3f;
 			SwingDamage = 3f;
 			JabChargeGain = 1.5f;
+		}
+
+		public override void SafeHoldItem(Player player)
+		{
+			MoRSupportUtils.IncreaseElementalResistance(player, MoRSupportUtils.Elements.Water, MoRElementResistance);
+			MoRSupportUtils.IncreaseElementalResistance(player, MoRSupportUtils.Elements.Ice, MoRElementResistance);
 		}
 
 		public override void OnHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, NPC.HitInfo hit, bool jabAttack, bool counterAttack)
@@ -46,6 +57,18 @@ namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 				modifiers.SetMaxDamage(target.life < 10 ? 1 : target.life - 10);
 				modifiers.DamageVariationScale *= 0;
 			}
+		}
+
+		public override void SafeModifyTooltips(List<TooltipLine> tooltips)
+		{
+			if (OrchidMod.ModOfRedemption == null) return;
+
+			tooltips.Add(new TooltipLine(Mod, "TooltipElem", Language.GetTextValue(
+				$"Mods.{Mod.Name}.UI.RedemptionSupport.ResistanceHeld", MoRElementResistance * 100, MoRSupportUtils.GetElementTooltip(MoRSupportUtils.Elements.Water))
+			));
+			tooltips.Add(new TooltipLine(Mod, "TooltipElem", Language.GetTextValue(
+				$"Mods.{Mod.Name}.UI.RedemptionSupport.ResistanceHeld", MoRElementResistance * 100, MoRSupportUtils.GetElementTooltip(MoRSupportUtils.Elements.Ice))
+			));
 		}
 	}
 }
