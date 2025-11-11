@@ -16,6 +16,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Shields
 		public List<Vector2> OldPosition;
 		public List<float> OldRotation;
 
+		public override void SetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Projectile, MoRSupportUtils.Elements.Arcane);
+		}
+
 		public override void SafeSetDefaults()
 		{
 			Projectile.width = 4;
@@ -113,6 +118,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Shields
 		private static Texture2D TextureMain;
 		public List<Vector2> OldPosition;
 		public List<float> OldRotation;
+
+		public override void SetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Projectile, MoRSupportUtils.Elements.Arcane);
+		}
 
 		public override void AltSetDefaults()
 		{

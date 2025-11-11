@@ -59,6 +59,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 			}
 		}
 
+		// TODO - add RedeConfigServer.Instance.ElementDisable check once Mod.Call added
 		public override void SafeModifyTooltips(List<TooltipLine> tooltips)
 		{
 			if (OrchidMod.ModOfRedemption == null) return;

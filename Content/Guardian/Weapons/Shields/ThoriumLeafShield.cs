@@ -1,8 +1,10 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using OrchidMod.Common.Attributes;
 using OrchidMod.Content.Guardian.Projectiles.Shields;
+using OrchidMod.Utilities;
+using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,6 +13,10 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 	[CrossmodContent("ThoriumMod")]
 	public class ThoriumLeafShield : OrchidModGuardianShield
 	{
+		public override void SafeSetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Nature);
+		}
 
 		public override void SafeSetDefaults()
 		{
@@ -36,7 +42,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 			for (int i = 0; i < quantity; i++)
 			{
 				float side = (i - ((quantity - 1) / 2f)) * -shield.direction;
-				int leaf = Projectile.NewProjectile(Item.GetSource_FromThis(), shield.Center, new Vector2(baseSpeed, 0).RotatedBy(dir) + spread.RotatedByRandom(Main.rand.NextFloat()) * side, ModContent.ProjectileType<ThoriumLeafShieldProj>(), (int)(shield.damage * 0.8f), Item.knockBack, player.whoAmI);
+				int leaf = Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), shield.Center, new Vector2(baseSpeed, 0).RotatedBy(dir) + spread.RotatedByRandom(Main.rand.NextFloat()) * side, ModContent.ProjectileType<ThoriumLeafShieldProj>(), (int)(shield.damage * 0.8f), Item.knockBack, player.whoAmI);
 				if (!fanOut) side = 0;
 				Main.projectile[leaf].position += Main.projectile[leaf].velocity * 4;
 				Main.projectile[leaf].ai[0] = dir + (side + Main.rand.NextFloat() - 0.5f) * 0.1f;

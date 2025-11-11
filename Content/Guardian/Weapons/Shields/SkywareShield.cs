@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using OrchidMod.Content.Guardian.Projectiles.Shields;
+using OrchidMod.Utilities;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -8,6 +10,10 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 {
 	public class SkywareShield : OrchidModGuardianShield
 	{
+		public override void SafeSetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Celestial);
+		}
 
 		public override void SafeSetDefaults()
 		{
@@ -35,7 +41,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 				for (int i = 0; i < 2 + Main.rand.Next(2); i++)
 				{
 					Vector2 dir = Vector2.Normalize(Main.MouseWorld - player.Center).RotatedByRandom(MathHelper.ToRadians(20f)) * Item.shootSpeed;
-					Projectile.NewProjectile(Item.GetSource_FromThis(), anchor.Center + Vector2.UnitY.RotatedByRandom(MathHelper.Pi) * Main.rand.NextFloat(16f), dir, type, (int)(shield.damage * 0.7f), Item.knockBack, player.whoAmI);
+					Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), anchor.Center + Vector2.UnitY.RotatedByRandom(MathHelper.Pi) * Main.rand.NextFloat(16f), dir, type, (int)(shield.damage * 0.7f), Item.knockBack, player.whoAmI);
 				}
 			}
 		}

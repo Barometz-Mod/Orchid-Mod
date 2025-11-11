@@ -1,10 +1,16 @@
-﻿using Terraria;
+﻿using OrchidMod.Utilities;
+using Terraria;
 using Terraria.ID;
 
 namespace OrchidMod.Content.Guardian.Weapons.Shields
 {
 	public class MeteoriteShield : OrchidModGuardianShield
 	{
+		public override void SafeSetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Fire);
+		}
+
 		public override void SafeSetDefaults()
 		{
 			Item.value = Item.sellPrice(0, 0, 40, 0);

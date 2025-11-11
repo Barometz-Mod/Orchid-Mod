@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
+using OrchidMod.Utilities;
 
 
 namespace OrchidMod.Content.General.Projectiles
@@ -13,6 +14,11 @@ namespace OrchidMod.Content.General.Projectiles
 	public class OrchidTitaniumShard : ModProjectile
 	{
 		public override string Texture => $"Terraria/Images/Projectile_908";
+
+		public override void SetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Projectile, MoRSupportUtils.Elements.Arcane);
+		}
 
 		public override void SetDefaults()
 		{

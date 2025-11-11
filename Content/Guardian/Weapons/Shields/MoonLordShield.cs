@@ -18,6 +18,11 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 
 		public Color Color => new Color((byte)(Main.DiscoR / 1.25f), (byte)(Main.DiscoG / 1.25f), (byte)(Main.DiscoB / 1.25f), 200);
 
+		public override void SafeSetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Celestial);
+		}
+
 		public override void SafeSetDefaults()
 		{
 			Item.value = Item.sellPrice(0, 10, 0, 0);

@@ -1,14 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
-using OrchidMod.Content.Guardian.Projectiles.Shields;
-using OrchidMod.Content.Guardian.Misc;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
+using OrchidMod.Content.Guardian.Misc;
+using OrchidMod.Content.Guardian.Projectiles.Shields;
+using OrchidMod.Utilities;
 using System;
 using System.Collections.Generic;
-using OrchidMod.Utilities;
+using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace OrchidMod.Content.Guardian.Weapons.Shields
 {
@@ -21,6 +22,13 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 		public float ColorMult;
 		public List<Vector2> OldPosition;
 		public List<float> OldRotation;
+
+		public override void SafeSetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Arcane);
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Wind);
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Celestial);
+		}
 
 		public override void SafeSetDefaults()
 		{
@@ -70,7 +78,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 				Projectile anchor = GetAnchor(player).Projectile;
 				int type = ModContent.ProjectileType<HorizonShieldProj>();
 				Vector2 dir = Vector2.Normalize(Main.MouseWorld - player.Center) * 15f;
-				Projectile.NewProjectile(Item.GetSource_FromThis(), anchor.Center, dir, type, (int)(shield.damage * (player.GetModPlayer<OrchidGuardian>().GuardianCounterTime > 0 ? 3f : 1f)), Item.knockBack, player.whoAmI, StoredBlock ? 1f : 0f);
+				Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), anchor.Center, dir, type, (int)(shield.damage * (player.GetModPlayer<OrchidGuardian>().GuardianCounterTime > 0 ? 3f : 1f)), Item.knockBack, player.whoAmI, StoredBlock ? 1f : 0f);
 				StoredBlock = false;
 			}
 		}

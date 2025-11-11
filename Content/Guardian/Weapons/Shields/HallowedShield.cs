@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using OrchidMod.Content.Guardian.Projectiles.Shields;
+using OrchidMod.Utilities;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -8,6 +10,11 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 {
 	public class HallowedShield : OrchidModGuardianShield
 	{
+		public override void SafeSetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Holy);
+		}
+
 		public override void SafeSetDefaults()
 		{
 			Item.value = Item.sellPrice(0, 4, 60, 0);
@@ -31,7 +38,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 				Projectile anchor = GetAnchor(player).Projectile;
 				int type = ModContent.ProjectileType<HallowedShieldProj>();
 				Vector2 dir = Vector2.Normalize(Main.MouseWorld - player.Center).RotatedByRandom(MathHelper.ToRadians(5f)) * (8f + Main.rand.NextFloat(4f));
-				Projectile.NewProjectile(Item.GetSource_FromThis(), anchor.Center, dir, type, (int)(shield.damage * 0.5f), Item.knockBack, player.whoAmI);
+				Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), anchor.Center, dir, type, (int)(shield.damage * 0.5f), Item.knockBack, player.whoAmI);
 			}
 		}
 

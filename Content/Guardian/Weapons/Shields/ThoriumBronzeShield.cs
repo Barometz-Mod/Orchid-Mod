@@ -16,6 +16,8 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 		public override void SafeSetStaticDefaults()
 		{
 			TextureAura ??= ModContent.Request<Texture2D>("OrchidMod/Content/Guardian/StandardAuraProjectile", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Earth);
 		}
 
 		public override void SafeSetDefaults()

@@ -6,11 +6,17 @@ using Terraria.Audio;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
+using OrchidMod.Utilities;
 
 namespace OrchidMod.Content.Guardian.Projectiles.Shields
 {
 	public class DemoniteShieldProjectile : OrchidModGuardianProjectile
 	{
+		public override void SetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Projectile, MoRSupportUtils.Elements.Arcane);
+		}
+
 		public override void SafeSetDefaults()
 		{
 			Projectile.width = 50;

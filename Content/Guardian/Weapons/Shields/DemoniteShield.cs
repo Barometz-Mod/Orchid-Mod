@@ -1,13 +1,19 @@
 ﻿using Microsoft.Xna.Framework;
+using OrchidMod.Content.Guardian.Projectiles.Shields;
+using OrchidMod.Utilities;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using OrchidMod.Content.Guardian.Projectiles.Shields;
 
 namespace OrchidMod.Content.Guardian.Weapons.Shields
 {
 	public class DemoniteShield : OrchidModGuardianShield
 	{
+		public override void SafeSetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Shadow);
+		}
 
 		public override void SafeSetDefaults()
 		{
@@ -36,7 +42,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 				OrchidGuardian guardian = player.GetModPlayer<OrchidGuardian>();
 				Projectile anchor = GetAnchor(player).Projectile;
 				int type = ModContent.ProjectileType<DemoniteShieldProjectile>();
-				Projectile projectile = Projectile.NewProjectileDirect(Item.GetSource_FromThis(), anchor.Center, dir, type, guardian.GetGuardianDamage(Item.damage), Item.knockBack, player.whoAmI);
+				Projectile projectile = Projectile.NewProjectileDirect(new EntitySource_ItemUse(player, Item), anchor.Center, dir, type, guardian.GetGuardianDamage(Item.damage), Item.knockBack, player.whoAmI);
 				projectile.CritChance = (int)(player.GetCritChance<GuardianDamageClass>() + player.GetCritChance<GenericDamageClass>() + Item.crit);
 			}
 			for (int i = 0; i < 10; i++)

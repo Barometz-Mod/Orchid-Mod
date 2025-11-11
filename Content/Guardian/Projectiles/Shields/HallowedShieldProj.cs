@@ -17,6 +17,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Shields
 		public List<float> OldRotation;
 		public int Timespent = 0;
 
+		public override void SetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Projectile, MoRSupportUtils.Elements.Arcane);
+		}
+
 		public override void SafeSetDefaults()
 		{
 			Projectile.width = 50;

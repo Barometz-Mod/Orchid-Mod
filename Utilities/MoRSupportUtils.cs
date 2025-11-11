@@ -57,12 +57,12 @@ namespace OrchidMod.Utilities
 		/// <param name="projectile">The Projectile to apply the element to.</param>
 		/// <param name="elementID">The ID of the element to apply to the item. Use <see cref="MoRSupportHelper">MoRSupportHelper</see> consts (ex. <see cref="Elements.Fire">MoRSupportHelper.Elements.Fire</see>).</param>
 		/// <param name="projsInheritProjElements">Whether the element should also be applied to any projectiles spawned by the projectile. Defaults to true.</param>
-		public static void RegisterElement(Projectile projectile, int elementID, bool projsInheritItemElements = true)
+		public static void RegisterElement(Projectile projectile, int elementID, bool projsInheritProjElements = true)
 		{
 			var redemptionMod = OrchidMod.ModOfRedemption;
 			if (redemptionMod == null) return;
 
-			redemptionMod.Call("addElementProj", elementID, projectile.type, projsInheritItemElements);
+			redemptionMod.Call("addElementProj", elementID, projectile.type, projsInheritProjElements);
 		}
 
 		/// <summary>
@@ -217,6 +217,9 @@ namespace OrchidMod.Utilities
 		/// <param name="elementId">The ID of the element. Use <see cref="MoRSupportHelper">MoRSupportHelper</see> consts (ex. <see cref="Elements.Fire">MoRSupportHelper.Elements.Fire</see>).</param>
 		public static string GetElementTooltip(short elementId)
 		{
+			var redemptionMod = OrchidMod.ModOfRedemption;
+			if (redemptionMod == null) return "";
+
 			var elementName = elementId switch
 			{
 				Elements.Fire => "Fire",
@@ -235,7 +238,7 @@ namespace OrchidMod.Utilities
 				Elements.Explosive => "Explosive",
 				_ => "Arcane",
 			};
-			return Language.GetTextValue($"Mods.{OrchidMod.ModOfRedemption.Name}.Items.{elementName}.DisplayName");
+			return Language.GetTextValue($"Mods.{redemptionMod.Name}.Items.{elementName}.DisplayName");
 		}
 
 		/////
