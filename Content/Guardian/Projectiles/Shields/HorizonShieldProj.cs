@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using OrchidMod.Content.Guardian.Weapons.Shields;
 using OrchidMod.Utilities;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace OrchidMod.Content.Guardian.Projectiles.Shields
@@ -36,6 +38,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Shields
 			HitNPCs = new List<int>();
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 60;
+		}
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			MoRSupportUtils.ApplyMoRElementsFromItem<HorizonShield>(Projectile, source);
 		}
 
 		public override void SendExtraAI(BinaryWriter writer)

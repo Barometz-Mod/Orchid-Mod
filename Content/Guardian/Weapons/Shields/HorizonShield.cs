@@ -23,12 +23,12 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 		public List<Vector2> OldPosition;
 		public List<float> OldRotation;
 
-		public override void SafeSetStaticDefaults()
-		{
-			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Arcane);
-			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Wind);
-			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Celestial);
-		}
+		public override List<short> MoRElements => [
+			MoRSupportUtils.Elements.Arcane,
+			MoRSupportUtils.Elements.Wind,
+			MoRSupportUtils.Elements.Celestial
+		];
+		public override List<short> MoRElementsProj => MoRElements;
 
 		public override void SafeSetDefaults()
 		{

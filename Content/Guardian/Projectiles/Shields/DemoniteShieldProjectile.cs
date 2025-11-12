@@ -1,22 +1,19 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using OrchidMod.Content.Guardian.Weapons.Shields;
+using OrchidMod.Utilities;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
-using OrchidMod.Utilities;
 
 namespace OrchidMod.Content.Guardian.Projectiles.Shields
 {
 	public class DemoniteShieldProjectile : OrchidModGuardianProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			MoRSupportUtils.RegisterElement(Projectile, MoRSupportUtils.Elements.Arcane);
-		}
-
 		public override void SafeSetDefaults()
 		{
 			Projectile.width = 50;
@@ -34,6 +31,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Shields
 		Vector2 Dir;
 		public List<Vector2> OldPosition;
 		public List<float> OldRotation;
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			MoRSupportUtils.ApplyMoRElementsFromItem<DemoniteShield>(Projectile, source);
+		}
 
 		public override void AI()
 		{

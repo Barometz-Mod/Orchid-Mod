@@ -3,6 +3,7 @@ using OrchidMod.Common.Attributes;
 using OrchidMod.Content.Guardian.Projectiles.Shields;
 using OrchidMod.Utilities;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -13,10 +14,8 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 	[CrossmodContent("ThoriumMod")]
 	public class ThoriumLeafShield : OrchidModGuardianShield
 	{
-		public override void SafeSetStaticDefaults()
-		{
-			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Nature);
-		}
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Nature];
+		public override List<short> MoRElementsProj => MoRElements;
 
 		public override void SafeSetDefaults()
 		{

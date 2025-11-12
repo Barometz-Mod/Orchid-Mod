@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Common.ModObjects;
+using OrchidMod.Content.Guardian.Weapons.Shields;
 using OrchidMod.Utilities;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -14,11 +16,6 @@ namespace OrchidMod.Content.Guardian.Projectiles.Shields
 		private static Texture2D TextureMain;
 		public List<Vector2> OldPosition;
 		public List<float> OldRotation;
-
-		public override void SetStaticDefaults()
-		{
-			MoRSupportUtils.RegisterElement(Projectile, MoRSupportUtils.Elements.Arcane);
-		}
 
 		public override void SafeSetDefaults()
 		{
@@ -34,6 +31,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Shields
 			TextureMain ??= ModContent.Request<Texture2D>(Texture, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 			OldPosition = new List<Vector2>();
 			OldRotation = new List<float>();
+		}
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			MoRSupportUtils.ApplyMoRElementsFromItem<SkywareShield>(Projectile, source);
 		}
 
 		public override void AI()

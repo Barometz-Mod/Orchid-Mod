@@ -1,5 +1,6 @@
 ﻿using OrchidMod.Common.ModObjects;
 using OrchidMod.Utilities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 
@@ -7,10 +8,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 {
 	public class CrimtaneShield : OrchidModGuardianShield
 	{
-		public override void SafeSetStaticDefaults()
-		{
-			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Blood);
-		}
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Blood];
 
 		public override void SafeSetDefaults()
 		{

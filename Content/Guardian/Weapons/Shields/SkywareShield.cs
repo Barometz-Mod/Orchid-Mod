@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using OrchidMod.Content.Guardian.Projectiles.Shields;
 using OrchidMod.Utilities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -10,10 +11,11 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 {
 	public class SkywareShield : OrchidModGuardianShield
 	{
-		public override void SafeSetStaticDefaults()
-		{
-			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Celestial);
-		}
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Celestial];
+		public override List<short> MoRElementsProj => [
+			MoRSupportUtils.Elements.Arcane,
+			MoRSupportUtils.Elements.Celestial
+		];
 
 		public override void SafeSetDefaults()
 		{

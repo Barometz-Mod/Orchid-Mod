@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Common.ModObjects;
+using OrchidMod.Content.Guardian.Weapons.Shields;
 using OrchidMod.Utilities;
 using System.Collections.Generic;
 using Terraria;
@@ -36,6 +37,8 @@ namespace OrchidMod.Content.Guardian.Projectiles.Shields
 		public override void OnSpawn(IEntitySource source)
 		{
 			Projectile.rotation = Main.rand.NextFloat(MathHelper.Pi);
+
+			MoRSupportUtils.ApplyMoRElementsFromItem<SpectreShield>(Projectile, source);
 		}
 
 		public override void AI()

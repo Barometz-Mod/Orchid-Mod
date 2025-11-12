@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Common.ModObjects;
+using OrchidMod.Content.Guardian.Weapons.Shields;
 using OrchidMod.Utilities;
 using System.Collections.Generic;
 using Terraria;
@@ -16,11 +17,6 @@ namespace OrchidMod.Content.Guardian.Projectiles.Shields
 		public List<Vector2> OldPosition;
 		public List<float> OldRotation;
 		public int Timespent = 0;
-
-		public override void SetStaticDefaults()
-		{
-			MoRSupportUtils.RegisterElement(Projectile, MoRSupportUtils.Elements.Arcane);
-		}
 
 		public override void SafeSetDefaults()
 		{
@@ -42,6 +38,8 @@ namespace OrchidMod.Content.Guardian.Projectiles.Shields
 		public override void OnSpawn(IEntitySource source)
 		{
 			Projectile.ai[1] = Main.rand.NextBool() ? 0f : 1f;
+
+			MoRSupportUtils.ApplyMoRElementsFromItem<HallowedShield>(Projectile, source);
 		}
 
 		public override void AI()

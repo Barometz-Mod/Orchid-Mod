@@ -1,5 +1,9 @@
-﻿using Terraria;
+﻿using System.Collections.Generic;
+using Terraria;
+using Terraria.DataStructures;
 using Terraria.Localization;
+using Terraria.ModLoader;
+using static OrchidMod.Utilities.MoRSupportUtils;
 
 namespace OrchidMod.Utilities
 {
@@ -239,6 +243,35 @@ namespace OrchidMod.Utilities
 				_ => "Arcane",
 			};
 			return Language.GetTextValue($"Mods.{redemptionMod.Name}.Items.{elementName}.DisplayName");
+		}
+
+		/////
+
+		/// <summary>
+		/// <para>Sets a projectile's registered elements to match a given ModItem's MoRElementsProj list.</para>
+		/// <para>To be called in a ModProjectile's OnSpawn.</para>
+		/// </summary>
+		/// <typeparam name="T">ModItem to reference MoRElementsProj; be sure the class contains a valid definition for MoRElementsProj.</typeparam>
+		/// <param name="projectile">The Projectile whose elements will be set.</param>
+		/// <param name="source">The projectile's source, which should be the supplied ModItem.</param>
+		/// <param name="elementIds">Optional reference elementId list, for use if the calling projectile is passing the list to any children projectiles.</param>
+		public static void ApplyMoRElementsFromItem<T>(Projectile projectile, IEntitySource source, List<short> elementIds = null) where T : ModItem
+		{
+			var redemptionMod = OrchidMod.ModOfRedemption;
+			if (redemptionMod == null) return;
+
+			if (source is EntitySource_ItemUse itemSource && itemSource.Item.ModItem is T modItem)
+			{
+				var elementsProp = typeof(T).GetProperty("MoRElementsProj");
+				if (elementsProp?.GetValue(modItem) is List<short> elementList)
+				{
+					foreach (var elementId in elementList)
+					{
+						OverrideElement(projectile, elementId, Override.Add);
+						elementIds?.Add(elementId);
+					}
+				}
+			}
 		}
 
 		/////

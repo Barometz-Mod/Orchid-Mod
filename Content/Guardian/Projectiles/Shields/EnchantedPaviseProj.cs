@@ -31,12 +31,7 @@ namespace OrchidMod.Content.Guardian.Projectiles.Shields
 
 		public override void OnSpawn(IEntitySource source)
 		{
-			if (source is EntitySource_ItemUse itemSource && itemSource.Item.ModItem is EnchantedPavise)
-			{
-				var parentPavise = itemSource.Item.ModItem as EnchantedPavise;
-				parentPavise.MoRElementsProj.ForEach(elementId
-					=> MoRSupportUtils.OverrideElement(Projectile, elementId, MoRSupportUtils.Override.Add));
-			}
+			MoRSupportUtils.ApplyMoRElementsFromItem<EnchantedPavise>(Projectile, source);
 		}
 
 		public override void AI()

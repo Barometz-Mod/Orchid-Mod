@@ -12,7 +12,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 	public class EnchantedPavise : OrchidModGuardianShield
 	{
 		public override List<short> MoRElements => [MoRSupportUtils.Elements.Arcane];
-		public override List<short> MoRElementsProj => [MoRSupportUtils.Elements.Arcane];
+		public override List<short> MoRElementsProj => MoRElements;
 
 		public override void SafeSetDefaults()
 		{

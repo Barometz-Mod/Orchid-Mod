@@ -1,10 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Common.ModObjects;
+using OrchidMod.Content.Guardian.Weapons.Shields;
 using OrchidMod.Utilities;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -15,11 +17,6 @@ namespace OrchidMod.Content.Guardian.Projectiles.Shields
 		private static Texture2D TextureMain;
 		public List<Vector2> OldPosition;
 		public List<float> OldRotation;
-
-		public override void SetStaticDefaults()
-		{
-			MoRSupportUtils.RegisterElement(Projectile, MoRSupportUtils.Elements.Arcane);
-		}
 
 		public override void SafeSetDefaults()
 		{
@@ -35,6 +32,17 @@ namespace OrchidMod.Content.Guardian.Projectiles.Shields
 			TextureMain ??= ModContent.Request<Texture2D>(Texture, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 			OldPosition = new List<Vector2>();
 			OldRotation = new List<float>();
+		}
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			if (source is EntitySource_Parent parent && parent.Entity is Projectile proj
+				&& proj.ModProjectile is NightShieldProjAlt)
+			{
+				var parentProj = (NightShieldProjAlt)proj.ModProjectile;
+				parentProj.morElementIds.ForEach(elementId
+					=> MoRSupportUtils.OverrideElement(Projectile, elementId, MoRSupportUtils.Override.Add));
+			}
 		}
 
 		public override void AI()
@@ -119,11 +127,6 @@ namespace OrchidMod.Content.Guardian.Projectiles.Shields
 		public List<Vector2> OldPosition;
 		public List<float> OldRotation;
 
-		public override void SetStaticDefaults()
-		{
-			MoRSupportUtils.RegisterElement(Projectile, MoRSupportUtils.Elements.Arcane);
-		}
-
 		public override void AltSetDefaults()
 		{
 			Projectile.width = 20;
@@ -138,6 +141,12 @@ namespace OrchidMod.Content.Guardian.Projectiles.Shields
 			TextureMain ??= ModContent.Request<Texture2D>(Texture, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 			OldPosition = new List<Vector2>();
 			OldRotation = new List<float>();
+		}
+
+		public List<short> morElementIds = new List<short>();
+		public override void OnSpawn(IEntitySource source)
+		{
+			MoRSupportUtils.ApplyMoRElementsFromItem<NightShield>(Projectile, source, morElementIds);
 		}
 
 		public override void AI()

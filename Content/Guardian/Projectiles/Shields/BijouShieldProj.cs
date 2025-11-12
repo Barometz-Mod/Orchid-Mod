@@ -1,8 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using OrchidMod.Content.Guardian.Weapons.Shields;
 using OrchidMod.Utilities;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace OrchidMod.Content.Guardian.Projectiles.Shields
@@ -29,6 +31,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Shields
 			OldRotation = new List<float>();
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
+		}
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			MoRSupportUtils.ApplyMoRElementsFromItem<BijouShield>(Projectile, source);
 		}
 
 		public override void AI()
