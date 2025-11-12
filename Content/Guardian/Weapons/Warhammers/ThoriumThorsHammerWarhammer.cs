@@ -1,14 +1,20 @@
-﻿using Terraria;
-using Terraria.ID;
+﻿using Microsoft.Xna.Framework;
 using OrchidMod.Common.Attributes;
-using Microsoft.Xna.Framework;
+using OrchidMod.Utilities;
 using System;
+using Terraria;
+using Terraria.ID;
 
 namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 {
 	[CrossmodContent("ThoriumMod")]
 	public class ThoriumThorsHammerWarhammer : OrchidModGuardianHammer
 	{
+		public override void SafeSetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Thunder);
+		}
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 34;

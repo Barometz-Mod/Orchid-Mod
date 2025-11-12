@@ -1,9 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.Audio;
-using Terraria.ModLoader;
 using OrchidMod.Common.Attributes;
+using OrchidMod.Utilities;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 
 namespace OrchidMod.Content.Guardian.Weapons.Warhammers
@@ -11,6 +12,10 @@ namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 	[CrossmodContent("ThoriumMod")]
 	public class ThoriumFeatherWarhammer : OrchidModGuardianHammer
 	{
+		public override void SafeSetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Wind);
+		}
 
 		public override void SafeSetDefaults()
 		{

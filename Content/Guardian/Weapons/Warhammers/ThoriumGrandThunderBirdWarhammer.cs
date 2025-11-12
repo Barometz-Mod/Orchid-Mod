@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using OrchidMod.Common.ModObjects;
 using OrchidMod.Content.Guardian.Buffs.Debuffs;
+using OrchidMod.Utilities;
 using ReLogic.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -15,6 +16,10 @@ namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 {
 	public class ThoriumGrandThunderBirdWarhammer : OrchidModGuardianHammer
 	{
+		public override void SafeSetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Thunder);
+		}
 
 		public override void SafeSetDefaults()
 		{

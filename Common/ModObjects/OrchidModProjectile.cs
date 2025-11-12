@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Common.Global.Projectiles;
 using OrchidMod.Content.General.Projectiles;
+using OrchidMod.Utilities;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -153,7 +154,7 @@ namespace OrchidMod.Common.ModObjects
 			}
 		}
 
-		public static int spawnGenericExplosion(Projectile projectile, int damage, float kb, int dimensions = 250, int damageType = 0, bool explosionGore = false, bool explosionSound = false)
+		public static int spawnGenericExplosion(Projectile projectile, int damage, float kb, int dimensions = 250, int damageType = 0, bool explosionGore = false, bool explosionSound = false, bool morExplosiveElement = false)
 		{
 			if (explosionSound) SoundEngine.PlaySound(SoundID.Item14, projectile.position);
 			if (explosionGore) spawnExplosionGore(projectile);
@@ -165,6 +166,11 @@ namespace OrchidMod.Common.ModObjects
 			newProjectile.position.X = projectile.Center.X - newProjectile.width / 2;
 			newProjectile.position.Y = projectile.Center.Y - newProjectile.width / 2;
 			newProjectile.netUpdate = true;
+
+			if (morExplosiveElement)
+			{
+				MoRSupportUtils.OverrideElement(newProjectile, MoRSupportUtils.Elements.Explosive, MoRSupportUtils.Override.Add);
+			}
 
 			if (damageType != 0)
 			{

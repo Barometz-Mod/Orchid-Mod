@@ -1,11 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
+using OrchidMod.Utilities;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 {
 	public class ChlorophyteWarhammer : OrchidModGuardianHammer
 	{
+		public override void SafeSetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Nature);
+		}
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 44;
@@ -32,7 +39,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 				for (int i = 0; i < 6; i++)
 				{
 					Vector2 dir = Vector2.UnitY.RotatedBy(MathHelper.TwoPi / 6f * i).RotatedByRandom(MathHelper.ToRadians(15f)) * (2f + Main.rand.NextFloat(6f));
-					Projectile.NewProjectile(Item.GetSource_FromThis(), projectile.Center, dir, ProjectileID.SporeCloud, (int)(projectile.damage * 0.5f), Item.knockBack, player.whoAmI);
+					Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), projectile.Center, dir, ProjectileID.SporeCloud, (int)(projectile.damage * 0.5f), Item.knockBack, player.whoAmI);
 				}
 			}
 		}
@@ -44,7 +51,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 				for (int i = 0; i < 3; i++)
 				{
 					Vector2 dir = Vector2.UnitY.RotatedBy(MathHelper.TwoPi / 3f * i).RotatedByRandom(MathHelper.ToRadians(15f)) * (1f + Main.rand.NextFloat(4f));
-					Projectile.NewProjectile(Item.GetSource_FromThis(), projectile.Center, dir, ProjectileID.SporeCloud, (int)(projectile.damage * 0.5f), Item.knockBack, player.whoAmI);
+					Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), projectile.Center, dir, ProjectileID.SporeCloud, (int)(projectile.damage * 0.5f), Item.knockBack, player.whoAmI);
 				}
 			}
 		}

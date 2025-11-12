@@ -1,11 +1,17 @@
-﻿using Terraria;
+﻿using OrchidMod.Common.ModObjects;
+using OrchidMod.Utilities;
+using Terraria;
 using Terraria.ID;
-using OrchidMod.Common.ModObjects;
 
 namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 {
 	public class HellWarhammer : OrchidModGuardianHammer
 	{
+		public override void SafeSetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Fire);
+		}
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 38;
@@ -37,7 +43,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 
 		public override void OnThrowHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool Weak)
 		{
-			if (!Weak && IsLocalPlayer(player)) OrchidModProjectile.spawnGenericExplosion(projectile, (int)(projectile.damage), 10f, 250, 0, true, true);
+			if (!Weak && IsLocalPlayer(player)) OrchidModProjectile.spawnGenericExplosion(projectile, (int)(projectile.damage), 10f, 250, 0, true, true, morExplosiveElement: true);
 			target.AddBuff(BuffID.OnFire, 180);
 		}
 

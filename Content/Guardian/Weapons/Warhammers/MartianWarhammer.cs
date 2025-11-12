@@ -1,15 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using OrchidMod.Common.ModObjects;
+using OrchidMod.Utilities;
+using System;
 using Terraria;
-using Terraria.Localization;
 using Terraria.Audio;
 using Terraria.ID;
+using Terraria.Localization;
 
 namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 {
 	public class MartianWarhammer : OrchidModGuardianHammer
 	{
+		public override void SafeSetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Thunder);
+		}
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 44;
