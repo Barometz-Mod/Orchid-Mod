@@ -1,8 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using OrchidMod.Content.Guardian.Weapons.Quarterstaves;
+using OrchidMod.Utilities;
 using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 
@@ -26,6 +29,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Quarterstaves
 			Projectile.localNPCHitCooldown = 10;
 			Projectile.tileCollide = false;
 			Projectile.friendly = false;
+		}
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			MoRSupportUtils.ApplyMoRElementsFromItem<SpectreQuarterstaff>(Projectile, source);
 		}
 
 		public override void AI()

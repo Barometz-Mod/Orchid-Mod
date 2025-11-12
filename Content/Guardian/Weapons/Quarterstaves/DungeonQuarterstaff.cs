@@ -1,7 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using OrchidMod.Content.Guardian.Projectiles.Quarterstaves;
+using OrchidMod.Utilities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -10,6 +13,9 @@ namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 	public class DungeonQuarterstaff : OrchidModGuardianQuarterstaff
 	{
 		private int boltCounter = 0;
+
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Water];
+		public override List<short> MoRElementsProj => MoRElements;
 
 		public override void SafeSetDefaults()
 		{
@@ -91,7 +97,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 		{
 			int damage = guardian.GetGuardianDamage(Item.damage * 0.5f);
 			int projectileType = ModContent.ProjectileType<DungeonQuarterstaffProjectile>();
-			Projectile newProjectile = Projectile.NewProjectileDirect(Item.GetSource_FromAI(), position, velocity, projectileType, damage, Item.knockBack, projectile.owner, 0f, jab ? 1 : 0);
+			Projectile newProjectile = Projectile.NewProjectileDirect(new EntitySource_ItemUse(guardian.Player, Item), position, velocity, projectileType, damage, Item.knockBack, projectile.owner, 0f, jab ? 1 : 0);
 			newProjectile.CritChance = guardian.GetGuardianCrit(Item.crit);
 			newProjectile.rotation = newProjectile.velocity.ToRotation();
 			newProjectile.netUpdate = true;

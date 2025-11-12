@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using OrchidMod.Utilities;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 
@@ -7,6 +9,8 @@ namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 {
 	public class CrimsonQuarterstaff : OrchidModGuardianQuarterstaff
 	{
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Blood];
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 48;

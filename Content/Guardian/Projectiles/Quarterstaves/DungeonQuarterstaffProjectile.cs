@@ -3,6 +3,9 @@ using Terraria;
 using Terraria.ID;
 using System;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
+using OrchidMod.Utilities;
+using OrchidMod.Content.Guardian.Weapons.Quarterstaves;
 
 namespace OrchidMod.Content.Guardian.Projectiles.Quarterstaves
 {
@@ -20,6 +23,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Quarterstaves
 			Projectile.alpha = 255;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
+		}
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			MoRSupportUtils.ApplyMoRElementsFromItem<DungeonQuarterstaff>(Projectile, source);
 		}
 
 		public override void AI()

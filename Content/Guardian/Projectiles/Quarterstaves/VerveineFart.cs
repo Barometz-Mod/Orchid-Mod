@@ -3,6 +3,9 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using OrchidMod.Utilities;
+using OrchidMod.Content.Guardian.Weapons.Quarterstaves;
 
 namespace OrchidMod.Content.Guardian.Projectiles.Quarterstaves
 {
@@ -22,6 +25,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Quarterstaves
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 15;
 			Projectile.alpha = 255;
+		}
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			MoRSupportUtils.ApplyMoRElementsFromItem<VerveineQuarterstaff>(Projectile, source);
 		}
 
 		public override void SafeModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)

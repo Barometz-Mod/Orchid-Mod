@@ -3,6 +3,9 @@ using Terraria.ID;
 using Terraria.Audio;
 using Microsoft.Xna.Framework;
 using System;
+using Terraria.DataStructures;
+using OrchidMod.Utilities;
+using OrchidMod.Content.Guardian.Weapons.Quarterstaves;
 
 namespace OrchidMod.Content.Guardian.Projectiles.Quarterstaves
 {
@@ -21,6 +24,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Quarterstaves
 			Projectile.extraUpdates = 1;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 20;
+		}
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			MoRSupportUtils.ApplyMoRElementsFromItem<ThoriumAquaiteQuarterstaff>(Projectile, source);
 		}
 
 		public override void AI()

@@ -1,18 +1,26 @@
 ﻿using Microsoft.Xna.Framework;
 using OrchidMod.Content.Guardian.Projectiles.Quarterstaves;
+using OrchidMod.Utilities;
 using System;
+using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.Localization;
-using System.Collections.Generic;
 
 namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 {
 	public class VerveineQuarterstaff : OrchidModGuardianQuarterstaff
 	{
+		public override List<short> MoRElements => [
+			MoRSupportUtils.Elements.Nature,
+			MoRSupportUtils.Elements.Poison
+		];
+		public override List<short> MoRElementsProj => MoRElements;
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 40;
@@ -36,7 +44,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 			{
 				//"fart"
 				//      -Verveine
-				Projectile newProjectile = Projectile.NewProjectileDirect(Item.GetSource_FromAI(), player.Center, Vector2.Zero, ModContent.ProjectileType<VerveineFart>(), (int)(Item.damage * 0.75f), Item.knockBack * 0.25f, projectile.owner);
+				Projectile newProjectile = Projectile.NewProjectileDirect(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ModContent.ProjectileType<VerveineFart>(), (int)(Item.damage * 0.75f), Item.knockBack * 0.25f, projectile.owner);
 				newProjectile.CritChance = guardian.GetGuardianCrit(Item.crit);
 			}
 		}

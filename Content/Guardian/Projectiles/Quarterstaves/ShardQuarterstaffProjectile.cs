@@ -34,12 +34,7 @@ namespace OrchidMod.Content.Guardian.Projectiles.Quarterstaves
 
 		public override void OnSpawn(IEntitySource source)
 		{
-			if (source is EntitySource_ItemUse itemSource && itemSource.Item.ModItem is ShardQuarterstaff)
-			{
-				var parentQuarterstaff = itemSource.Item.ModItem as ShardQuarterstaff;
-				parentQuarterstaff.MoRElementsProj.ForEach(elementId
-					=> MoRSupportUtils.OverrideElement(Projectile, elementId, MoRSupportUtils.Override.Add));
-			}
+			MoRSupportUtils.ApplyMoRElementsFromItem<ShardQuarterstaff>(Projectile, source);
 		}
 
 		public override void AI()
