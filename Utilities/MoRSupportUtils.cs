@@ -244,6 +244,15 @@ namespace OrchidMod.Utilities
 		/////
 
 		// For testing
+
+		public static int GetFirstElementItem(Item item)
+		{
+			var redemptionMod = OrchidMod.ModOfRedemption;
+			if (redemptionMod == null) return -1;
+
+			return (int)redemptionMod.Call("getFirstElementItem", item, false);
+		}
+
 		public static int GetFirstElementProj(Projectile projectile)
 		{
 			var redemptionMod = OrchidMod.ModOfRedemption;

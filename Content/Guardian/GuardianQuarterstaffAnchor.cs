@@ -75,11 +75,26 @@ namespace OrchidMod.Content.Guardian
 			{
 				QuarterstaffTexture = ModContent.Request<Texture2D>(guardianItem.QuarterstaffTexture, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 				ResetSize();
+				UpdateMoRElements(guardianItem);
 			}
 			else if (IsLocalOwner)
 			{
 				Projectile.Kill();
 			}
+		}
+
+		private void UpdateMoRElements(OrchidModGuardianQuarterstaff guardianItem)
+		{
+			for (short elementId = 1; elementId < 16; elementId++)
+			{
+				MoRSupportUtils.OverrideElement(guardianItem.Item, elementId, MoRSupportUtils.Override.Remove);
+				MoRSupportUtils.OverrideElement(Projectile, elementId, MoRSupportUtils.Override.Remove);
+			}
+			guardianItem.MoRElements.ForEach(delegate (short elementId)
+			{
+				MoRSupportUtils.OverrideElement(guardianItem.Item, elementId, MoRSupportUtils.Override.Add);
+				MoRSupportUtils.OverrideElement(Projectile, elementId, MoRSupportUtils.Override.Add);
+			});
 		}
 
 		public override void AI()

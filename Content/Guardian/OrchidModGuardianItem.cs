@@ -1,5 +1,6 @@
 ﻿using OrchidMod.Common;
 using OrchidMod.Common.Attributes;
+using OrchidMod.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -11,6 +12,11 @@ namespace OrchidMod.Content.Guardian
 	[ClassTag(ClassTags.Guardian)]
 	public abstract class OrchidModGuardianItem : ModItem
 	{
+		private List<short> morElements = new List<short>();
+		private List<short> morElementsProj = new List<short>();
+		public virtual List<short> MoRElements { get => morElements; set => morElements = value; }
+		public virtual List<short> MoRElementsProj { get => morElementsProj; set => morElementsProj = value; }
+
 		public bool IsLocalPlayer(Player player) => player.whoAmI == Main.myPlayer;
 
 		public virtual void SafeSetStaticDefaults() { }
@@ -18,6 +24,8 @@ namespace OrchidMod.Content.Guardian
 		public override void SetStaticDefaults()
 		{
 			SafeSetStaticDefaults();
+
+			MoRElements.ForEach(elementId => MoRSupportUtils.RegisterElement(Item, elementId));
 		}
 		
 		public virtual void SafeSetDefaults() { }

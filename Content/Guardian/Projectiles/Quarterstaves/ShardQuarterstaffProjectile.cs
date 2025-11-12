@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using OrchidMod.Content.Guardian.Weapons.Quarterstaves;
 using OrchidMod.Utilities;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 
 namespace OrchidMod.Content.Guardian.Projectiles.Quarterstaves
@@ -28,6 +30,16 @@ namespace OrchidMod.Content.Guardian.Projectiles.Quarterstaves
 			Projectile.localNPCHitCooldown = 20;
 			OldPosition = new List<Vector2>();
 			OldRotation = new List<float>();
+		}
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			if (source is EntitySource_ItemUse itemSource && itemSource.Item.ModItem is ShardQuarterstaff)
+			{
+				var parentQuarterstaff = itemSource.Item.ModItem as ShardQuarterstaff;
+				parentQuarterstaff.MoRElementsProj.ForEach(elementId
+					=> MoRSupportUtils.OverrideElement(Projectile, elementId, MoRSupportUtils.Override.Add));
+			}
 		}
 
 		public override void AI()

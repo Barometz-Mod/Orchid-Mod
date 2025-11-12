@@ -1,14 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using OrchidMod.Utilities;
 using System;
+using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
 using Terraria.GameContent;
+using Terraria.ID;
 
 namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 {
 	public class FlamingQuarterstaff : OrchidModGuardianQuarterstaff
 	{
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Fire];
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 42;

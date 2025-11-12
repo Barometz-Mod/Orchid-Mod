@@ -1,7 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using OrchidMod.Common;
 using OrchidMod.Content.Guardian.Projectiles.Quarterstaves;
+using OrchidMod.Utilities;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -9,6 +12,16 @@ namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 {
 	public class ShardQuarterstaff : OrchidModGuardianQuarterstaff
 	{
+		public override List<short> MoRElements => [
+			MoRSupportUtils.Elements.Holy,
+			MoRSupportUtils.Elements.Shadow
+		];
+		public override List<short> MoRElementsProj => [
+			MoRSupportUtils.Elements.Arcane,
+			MoRSupportUtils.Elements.Holy,
+			MoRSupportUtils.Elements.Shadow
+		];
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 48;
@@ -29,7 +42,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 			{
 				int damage = guardian.GetGuardianDamage(Item.damage * 0.25f);
 				int projectileType = ModContent.ProjectileType<ShardQuarterstaffProjectile>();
-				Projectile newProjectile = Projectile.NewProjectileDirect(Item.GetSource_FromAI(), projectile.Center, player.velocity, projectileType, damage, 0f, projectile.owner, 0.8f, Main.rand.NextFloat(3.14f));
+				Projectile newProjectile = Projectile.NewProjectileDirect(new EntitySource_ItemUse(player, Item), projectile.Center, player.velocity, projectileType, damage, 0f, projectile.owner, 0.8f, Main.rand.NextFloat(3.14f));
 				newProjectile.CritChance = guardian.GetGuardianCrit(Item.crit);
 			}
 		}
