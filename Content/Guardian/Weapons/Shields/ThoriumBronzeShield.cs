@@ -1,9 +1,10 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Common.ModObjects;
 using OrchidMod.Content.Guardian.Buffs;
 using OrchidMod.Utilities;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,12 +13,12 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 {
 	public class ThoriumBronzeShield : OrchidModGuardianShield
 	{
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Earth];
+
 		public static Texture2D TextureAura;
 		public override void SafeSetStaticDefaults()
 		{
 			TextureAura ??= ModContent.Request<Texture2D>("OrchidMod/Content/Guardian/StandardAuraProjectile", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Earth);
 		}
 
 		public override void SafeSetDefaults()

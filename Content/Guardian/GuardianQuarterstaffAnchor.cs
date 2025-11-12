@@ -85,6 +85,7 @@ namespace OrchidMod.Content.Guardian
 
 		private void UpdateMoRElements(OrchidModGuardianQuarterstaff guardianItem)
 		{
+			if (OrchidMod.ModOfRedemption == null) return;
 			for (short elementId = 1; elementId < 16; elementId++)
 			{
 				MoRSupportUtils.OverrideElement(guardianItem.Item, elementId, MoRSupportUtils.Override.Remove);

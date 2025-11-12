@@ -1,8 +1,12 @@
 using Microsoft.Xna.Framework;
+using OrchidMod.Common.ModObjects;
+using OrchidMod.Content.Guardian.Weapons.Quarterstaves;
+using OrchidMod.Content.Guardian.Weapons.Shields;
+using OrchidMod.Utilities;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
-using OrchidMod.Common.ModObjects;
 
 namespace OrchidMod.Content.Guardian.Projectiles.Shields
 {
@@ -23,6 +27,16 @@ namespace OrchidMod.Content.Guardian.Projectiles.Shields
 		{
 			float lightMult = 0.25f + Math.Abs((1f * (Main.player[Main.myPlayer].GetModPlayer<OrchidPlayer>().Timer120 % 30) - 15) / 10f);
 			return lightColor * lightMult;
+		}
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			if (source is EntitySource_ItemUse itemSource && itemSource.Item.ModItem is EnchantedPavise)
+			{
+				var parentPavise = itemSource.Item.ModItem as EnchantedPavise;
+				parentPavise.MoRElementsProj.ForEach(elementId
+					=> MoRSupportUtils.OverrideElement(Projectile, elementId, MoRSupportUtils.Override.Add));
+			}
 		}
 
 		public override void AI()

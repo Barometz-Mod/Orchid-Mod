@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Common.ModObjects;
 using OrchidMod.Content.General.Prefixes;
+using OrchidMod.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -53,6 +54,26 @@ namespace OrchidMod.Content.Guardian
 			Projectile.ai[1] = 0f;
 			Projectile.netUpdate = true;
 			Projectile.spriteDirection = 1;
+
+			if (ShieldItem.ModItem is OrchidModGuardianShield guardianItem)
+			{
+				UpdateMoRElements(guardianItem);
+			}
+		}
+
+		private void UpdateMoRElements(OrchidModGuardianShield guardianItem)
+		{
+			if (OrchidMod.ModOfRedemption == null) return;
+			for (short elementId = 1; elementId < 16; elementId++)
+			{
+				MoRSupportUtils.OverrideElement(guardianItem.Item, elementId, MoRSupportUtils.Override.Remove);
+				MoRSupportUtils.OverrideElement(Projectile, elementId, MoRSupportUtils.Override.Remove);
+			}
+			guardianItem.MoRElements.ForEach(delegate (short elementId)
+			{
+				MoRSupportUtils.OverrideElement(guardianItem.Item, elementId, MoRSupportUtils.Override.Add);
+				MoRSupportUtils.OverrideElement(Projectile, elementId, MoRSupportUtils.Override.Add);
+			});
 		}
 
 		public override void SafeOnHitNPC(NPC target, NPC.HitInfo hit, int damageDone, Player player, OrchidGuardian guardian)
