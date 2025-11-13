@@ -16,11 +16,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 			MoRSupportUtils.Elements.Holy,
 			MoRSupportUtils.Elements.Shadow
 		];
-		public override List<short> MoRElementsProj => [
-			MoRSupportUtils.Elements.Arcane,
-			MoRSupportUtils.Elements.Holy,
-			MoRSupportUtils.Elements.Shadow
-		];
+		public override List<short> MoRElementsProj => [..MoRElements, MoRSupportUtils.Elements.Arcane];
 
 		public override void SafeSetDefaults()
 		{

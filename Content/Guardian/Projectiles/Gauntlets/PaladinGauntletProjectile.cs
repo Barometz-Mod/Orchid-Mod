@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using OrchidMod.Content.Guardian.Weapons.Gauntlets;
 using OrchidMod.Utilities;
 using System.Collections.Generic;
 using Terraria;
@@ -40,6 +41,8 @@ namespace OrchidMod.Content.Guardian.Projectiles.Gauntlets
 			{
 				Projectile.timeLeft -= Main.rand.Next(5) + 25;
 			}
+
+			MoRSupportUtils.ApplyMoRElementsFromItem<PaladinGauntlet>(Projectile, source);
 		}
 
 		public override void AI()

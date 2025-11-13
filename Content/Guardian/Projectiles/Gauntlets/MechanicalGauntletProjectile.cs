@@ -1,7 +1,10 @@
 using Microsoft.Xna.Framework;
 using OrchidMod.Common.ModObjects;
+using OrchidMod.Content.Guardian.Weapons.Gauntlets;
+using OrchidMod.Utilities;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace OrchidMod.Content.Guardian.Projectiles.Gauntlets
@@ -25,6 +28,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Gauntlets
 			Projectile.localNPCHitCooldown = 60;
 			Projectile.tileCollide = false;
 			Strong = true;
+		}
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			MoRSupportUtils.ApplyMoRElementsFromItem<MechanicalGauntlet>(Projectile, source);
 		}
 
 		public override void AI()

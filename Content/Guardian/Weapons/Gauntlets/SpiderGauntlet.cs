@@ -2,8 +2,11 @@
 using OrchidMod.Content.General.Prefixes;
 using OrchidMod.Content.Guardian.Buffs;
 using OrchidMod.Content.Guardian.Projectiles.Gauntlets;
+using OrchidMod.Utilities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,6 +14,9 @@ namespace OrchidMod.Content.Guardian.Weapons.Gauntlets
 {
 	public class SpiderGauntlet : OrchidModGuardianGauntlet
 	{
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Poison];
+		public override List<short> MoRElementsProj => MoRElements;
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 38;
@@ -44,7 +50,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Gauntlets
 				float speed = StrikeVelocity * (charged ? 1f : 0.75f) * Item.GetGlobalItem<GuardianPrefixItem>().GetSlamDistance() * Main.rand.NextFloat(0.85f, 1.15f);
 				Vector2 velocity = Vector2.UnitY.RotatedBy((Main.MouseWorld - player.Center).ToRotation() - MathHelper.PiOver2).RotatedByRandom(MathHelper.ToRadians(5));
 				int spikeDamage = (int)(guardian.GetGuardianDamage(Item.damage) * (charged ? 1.15f : 0.4f));
-				Projectile newProjectile = Projectile.NewProjectileDirect(Item.GetSource_FromAI(), projectile.Center, velocity * speed, projectileType, spikeDamage, Item.knockBack, player.whoAmI, charged ? 1f : 0f);
+				Projectile newProjectile = Projectile.NewProjectileDirect(new EntitySource_ItemUse(player, Item), projectile.Center, velocity * speed, projectileType, spikeDamage, Item.knockBack, player.whoAmI, charged ? 1f : 0f);
 				newProjectile.CritChance = (int)(player.GetCritChance<GuardianDamageClass>() + player.GetCritChance<GenericDamageClass>() + Item.crit);
 				newProjectile.position += newProjectile.velocity * 0.5f;
 				newProjectile.rotation = newProjectile.velocity.ToRotation();

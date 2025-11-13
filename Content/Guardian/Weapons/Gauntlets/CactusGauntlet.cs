@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using OrchidMod.Utilities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -8,10 +9,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Gauntlets
 {
 	public class CactusGauntlet : OrchidModGuardianGauntlet
 	{
-		public override void SafeSetStaticDefaults()
-		{
-			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Nature);
-		}
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Nature];
 
 		public override void SafeSetDefaults()
 		{
@@ -24,11 +22,6 @@ namespace OrchidMod.Content.Guardian.Weapons.Gauntlets
 			Item.useTime = 30;
 			StrikeVelocity = 14f;
 			ParryDuration = 50;
-		}
-
-		public override void OnHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, NPC.HitInfo hit, bool charged)
-		{
-			Main.NewText(MoRSupportUtils.GetFirstElementProj(projectile));
 		}
 
 		public override void OnParryNPC(Player player, OrchidGuardian guardian, NPC npc, Projectile anchor)

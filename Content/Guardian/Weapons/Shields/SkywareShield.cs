@@ -12,10 +12,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 	public class SkywareShield : OrchidModGuardianShield
 	{
 		public override List<short> MoRElements => [MoRSupportUtils.Elements.Celestial];
-		public override List<short> MoRElementsProj => [
-			MoRSupportUtils.Elements.Arcane,
-			MoRSupportUtils.Elements.Celestial
-		];
+		public override List<short> MoRElementsProj => [..MoRElements, MoRSupportUtils.Elements.Arcane];
 
 		public override void SafeSetDefaults()
 		{

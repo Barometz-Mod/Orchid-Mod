@@ -12,10 +12,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 	public class HallowedShield : OrchidModGuardianShield
 	{
 		public override List<short> MoRElements => [MoRSupportUtils.Elements.Holy];
-		public override List<short> MoRElementsProj => [
-			MoRSupportUtils.Elements.Arcane,
-			MoRSupportUtils.Elements.Holy
-		];
+		public override List<short> MoRElementsProj => [..MoRElements, MoRSupportUtils.Elements.Arcane];
 
 		public override void SafeSetDefaults()
 		{

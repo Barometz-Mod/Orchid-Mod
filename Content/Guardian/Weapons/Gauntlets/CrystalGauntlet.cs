@@ -1,9 +1,12 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using OrchidMod.Content.General.Prefixes;
 using OrchidMod.Content.Guardian.Projectiles.Gauntlets;
+using OrchidMod.Utilities;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,6 +14,12 @@ namespace OrchidMod.Content.Guardian.Weapons.Gauntlets
 {
 	public class CrystalGauntlet : OrchidModGuardianGauntlet
 	{
+		public override List<short> MoRElements => [
+			MoRSupportUtils.Elements.Arcane,
+			MoRSupportUtils.Elements.Holy
+		];
+		public override List<short> MoRElementsProj => MoRElements;
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 36;
@@ -70,7 +79,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Gauntlets
 			float speed = StrikeVelocity * Item.GetGlobalItem<GuardianPrefixItem>().GetSlamDistance() * 0.35f;
 			for (int i = 0; i < 4; i++)
 			{
-				Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center, new Vector2(i % 2 == 0 ? speed : -speed, i < 2 ? speed : -speed) + player.velocity, ModContent.ProjectileType<CrystalGauntletProjectile>(), shardDamage, player.GetWeaponKnockback(Item), player.whoAmI);
+				Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, new Vector2(i % 2 == 0 ? speed : -speed, i < 2 ? speed : -speed) + player.velocity, ModContent.ProjectileType<CrystalGauntletProjectile>(), shardDamage, player.GetWeaponKnockback(Item), player.whoAmI);
 			}
 		}
 
@@ -109,8 +118,8 @@ namespace OrchidMod.Content.Guardian.Weapons.Gauntlets
 				int shardDamage = player.GetWeaponDamage(Item) / 6;
 				float speed = StrikeVelocity * Item.GetGlobalItem<GuardianPrefixItem>().GetSlamDistance() * 0.5f;
 				Vector2 velocity = Vector2.UnitX.RotatedBy((Main.MouseWorld - player.Center).ToRotation()) * speed;
-				Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center, velocity.RotatedBy(-0.5f) + player.velocity, ModContent.ProjectileType<CrystalGauntletProjectile>(), shardDamage, player.GetWeaponKnockback(Item), player.whoAmI);
-				Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center, velocity.RotatedBy(0.5f) + player.velocity, ModContent.ProjectileType<CrystalGauntletProjectile>(), shardDamage, player.GetWeaponKnockback(Item), player.whoAmI);
+				Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, velocity.RotatedBy(-0.5f) + player.velocity, ModContent.ProjectileType<CrystalGauntletProjectile>(), shardDamage, player.GetWeaponKnockback(Item), player.whoAmI);
+				Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, velocity.RotatedBy(0.5f) + player.velocity, ModContent.ProjectileType<CrystalGauntletProjectile>(), shardDamage, player.GetWeaponKnockback(Item), player.whoAmI);
 			}
 			return true;
 		}

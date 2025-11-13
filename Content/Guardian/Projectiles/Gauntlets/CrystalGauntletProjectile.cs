@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using OrchidMod.Content.Guardian.Weapons.Gauntlets;
+using OrchidMod.Utilities;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -22,7 +25,12 @@ namespace OrchidMod.Content.Guardian.Projectiles.Gauntlets
 			Projectile.penetrate = 3; //effectively 2, see safeonhitnpc
 			Projectile.ArmorPenetration = 50;
 		}
-		
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			MoRSupportUtils.ApplyMoRElementsFromItem<CrystalGauntlet>(Projectile, source);
+		}
+
 		public override void AI()
 		{
 			if (Projectile.timeLeft == 40) Projectile.frame = Main.rand.Next(3);

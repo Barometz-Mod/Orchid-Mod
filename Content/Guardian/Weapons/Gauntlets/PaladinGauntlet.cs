@@ -2,8 +2,11 @@
 using OrchidMod.Content.General.Prefixes;
 using OrchidMod.Content.Guardian.Buffs;
 using OrchidMod.Content.Guardian.Projectiles.Gauntlets;
+using OrchidMod.Utilities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,6 +14,9 @@ namespace OrchidMod.Content.Guardian.Weapons.Gauntlets
 {
 	public class PaladinGauntlet : OrchidModGuardianGauntlet
 	{
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Holy];
+		public override List<short> MoRElementsProj => [..MoRElements, MoRSupportUtils.Elements.Arcane];
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 38;
@@ -44,7 +50,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Gauntlets
 					float speed = StrikeVelocity * Item.GetGlobalItem<GuardianPrefixItem>().GetSlamDistance() * Main.rand.NextFloat(0.55f, 0.8f);
 					Vector2 velocity = Vector2.UnitY.RotatedBy((Main.MouseWorld - player.Center).ToRotation() - MathHelper.PiOver2).RotatedByRandom(MathHelper.ToRadians(40));
 					int shardDamage = guardian.GetGuardianDamage(Item.damage * 0.35f);
-					Projectile newProjectile = Projectile.NewProjectileDirect(Item.GetSource_FromAI(), projectile.Center, velocity * speed, projectileType, shardDamage, Item.knockBack, player.whoAmI, 1f);
+					Projectile newProjectile = Projectile.NewProjectileDirect(new EntitySource_ItemUse(player, Item), projectile.Center, velocity * speed, projectileType, shardDamage, Item.knockBack, player.whoAmI, 1f);
 					newProjectile.CritChance = (int)(player.GetCritChance<GuardianDamageClass>() + player.GetCritChance<GenericDamageClass>() + Item.crit);
 					newProjectile.rotation = newProjectile.velocity.ToRotation();
 					newProjectile.velocity += player.velocity * 1.5f;
@@ -63,7 +69,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Gauntlets
 					float speed = StrikeVelocity * Item.GetGlobalItem<GuardianPrefixItem>().GetSlamDistance() * Main.rand.NextFloat(0.5f, 0.65f);
 					Vector2 velocity = Vector2.UnitY.RotatedBy((Main.MouseWorld - player.Center).ToRotation() - MathHelper.PiOver2).RotatedByRandom(MathHelper.ToRadians(5));
 					int shardDamage = guardian.GetGuardianDamage(Item.damage * 0.35f);
-					Projectile newProjectile = Projectile.NewProjectileDirect(Item.GetSource_FromAI(), projectile.Center, velocity * speed, projectileType, shardDamage, Item.knockBack, player.whoAmI);
+					Projectile newProjectile = Projectile.NewProjectileDirect(new EntitySource_ItemUse(player, Item), projectile.Center, velocity * speed, projectileType, shardDamage, Item.knockBack, player.whoAmI);
 					newProjectile.CritChance = (int)(player.GetCritChance<GuardianDamageClass>() + player.GetCritChance<GenericDamageClass>() + Item.crit);
 					newProjectile.rotation = newProjectile.velocity.ToRotation();
 					newProjectile.velocity += player.velocity * 1.5f;

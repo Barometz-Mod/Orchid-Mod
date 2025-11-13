@@ -1,10 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Common.ModObjects;
+using OrchidMod.Content.Guardian.Weapons.Gauntlets;
 using OrchidMod.Utilities;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -34,6 +36,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Gauntlets
 			OldRotation = new List<float>();
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
+		}
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			MoRSupportUtils.ApplyMoRElementsFromItem<SpiderGauntlet>(Projectile, source);
 		}
 
 		public override void AI()

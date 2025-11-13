@@ -2,13 +2,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Common;
 using OrchidMod.Content.General.Prefixes;
+using OrchidMod.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
-using Terraria.Localization;
 using Terraria.Audio;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.Player;
 
@@ -81,6 +82,29 @@ namespace OrchidMod.Content.Guardian
 			GauntletDashAngle = 0f;
 			GauntletDashTimer = 0;
 			owner.GetModPlayer<OrchidGuardian>().GuardianItemCharge = 0;
+
+			if (GauntletItem.ModItem is OrchidModGuardianGauntlet guardianItem)
+			{
+				UpdateMoRElements(guardianItem);
+			}
+		}
+
+		public List<short> morElementIds = new List<short>();
+		private void UpdateMoRElements(OrchidModGuardianGauntlet guardianItem)
+		{
+			if (OrchidMod.ModOfRedemption == null) return;
+			for (short elementId = 1; elementId < 16; elementId++)
+			{
+				MoRSupportUtils.OverrideElement(guardianItem.Item, elementId, MoRSupportUtils.Override.Remove);
+				MoRSupportUtils.OverrideElement(Projectile, elementId, MoRSupportUtils.Override.Remove);
+			}
+			morElementIds.Clear();
+			guardianItem.MoRElements.ForEach(delegate (short elementId)
+			{
+				MoRSupportUtils.OverrideElement(guardianItem.Item, elementId, MoRSupportUtils.Override.Add);
+				MoRSupportUtils.OverrideElement(Projectile, elementId, MoRSupportUtils.Override.Add);
+				morElementIds.Add(elementId);
+			});
 		}
 
 		public override void AI()

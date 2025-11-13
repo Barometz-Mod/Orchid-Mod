@@ -14,10 +14,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 	public class ThoriumThoriumQuarterstaff : OrchidModGuardianQuarterstaff
 	{
 		public override List<short> MoRElements => [MoRSupportUtils.Elements.Thunder];
-		public override List<short> MoRElementsProj => [
-			MoRSupportUtils.Elements.Arcane,
-			MoRSupportUtils.Elements.Thunder
-		];
+		public override List<short> MoRElementsProj => [..MoRElements, MoRSupportUtils.Elements.Arcane];
 
 		public override void SafeSetDefaults()
 		{

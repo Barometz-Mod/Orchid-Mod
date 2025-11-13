@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using OrchidMod.Utilities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 
@@ -6,6 +8,8 @@ namespace OrchidMod.Content.Guardian.Weapons.Gauntlets
 {
 	public class NanitesGauntlet : OrchidModGuardianGauntlet
 	{
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Thunder];
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 42;

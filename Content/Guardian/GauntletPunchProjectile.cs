@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Utilities;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -36,6 +37,17 @@ namespace OrchidMod.Content.Guardian
 			Projectile.extraUpdates = 3;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 90;
+		}
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			if (source is EntitySource_Parent parent && parent.Entity is Projectile proj
+				&& proj.ModProjectile is GuardianGauntletAnchor)
+			{
+				var parentProj = (GuardianGauntletAnchor)proj.ModProjectile;
+				parentProj.morElementIds.ForEach(elementId
+					=> MoRSupportUtils.OverrideElement(Projectile, elementId, MoRSupportUtils.Override.Add));
+			}
 		}
 
 		public override void AI()

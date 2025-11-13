@@ -7,6 +7,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent;
 using System;
+using Terraria.DataStructures;
+using OrchidMod.Utilities;
+using OrchidMod.Content.Guardian.Weapons.Gauntlets;
 
 namespace OrchidMod.Content.Guardian.Projectiles.Gauntlets
 {
@@ -25,6 +28,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Gauntlets
 			Projectile.localNPCHitCooldown = 30;
 			Projectile.hide = true;
 			Strong = true;
+		}
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			MoRSupportUtils.ApplyMoRElementsFromItem<ThoriumGraniteGauntlet>(Projectile, source);
 		}
 
 		public override void AI()

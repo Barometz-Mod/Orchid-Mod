@@ -12,10 +12,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 	public class NightShield : OrchidModGuardianShield
 	{
 		public override List<short> MoRElements => [MoRSupportUtils.Elements.Shadow];
-		public override List<short> MoRElementsProj => [
-			MoRSupportUtils.Elements.Arcane,
-			MoRSupportUtils.Elements.Shadow
-		];
+		public override List<short> MoRElementsProj => [..MoRElements, MoRSupportUtils.Elements.Arcane];
 
 		public override void SafeSetDefaults()
 		{
