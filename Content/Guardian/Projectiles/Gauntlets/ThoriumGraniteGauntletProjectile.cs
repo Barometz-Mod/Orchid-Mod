@@ -84,6 +84,14 @@ namespace OrchidMod.Content.Guardian.Projectiles.Gauntlets
 			}
 		}
 
+		public override void SafeModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+		{
+			if (MoRSupportUtils.HitDemon(target))
+			{
+				modifiers.FinalDamage *= 1f + ThoriumGraniteGauntlet.MoRDemonBonusDamage;
+			}
+		}
+
 		public override void SafeOnHitNPC(NPC target, NPC.HitInfo hit, int damageDone, Player player, OrchidGuardian guardian)
 		{
 			if (Projectile.timeLeft > 20)

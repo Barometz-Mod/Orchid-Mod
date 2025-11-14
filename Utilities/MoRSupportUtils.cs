@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Localization;
@@ -13,6 +14,8 @@ namespace OrchidMod.Utilities
 	/// </summary>
 	public static class MoRSupportUtils
 	{
+		public static List<int> DemonTypeCache = null;
+
 		public static class Elements
 		{
 			public const short Arcane = 1;
@@ -272,6 +275,24 @@ namespace OrchidMod.Utilities
 					}
 				}
 			}
+		}
+
+		public static bool HitDemon(NPC target)
+		{
+			if (OrchidMod.ModOfRedemption == null) return false;
+
+			if (DemonTypeCache == null)
+			{
+				var demonNPCsType = OrchidMod.ModOfRedemption.Code.GetType("Redemption.Globals.NPCLists");
+				if (demonNPCsType == null) return false;
+
+				var demonNPCs = demonNPCsType.GetField("Demon", BindingFlags.Public | BindingFlags.Static);
+				if (demonNPCs == null) return false;
+
+				DemonTypeCache = demonNPCs.GetValue(null) as List<int>;
+			}
+
+			return DemonTypeCache != null && DemonTypeCache.Contains(target.type);
 		}
 
 		/////

@@ -96,13 +96,11 @@ namespace OrchidMod.Content.Guardian
 			for (short elementId = 1; elementId < 16; elementId++)
 			{
 				MoRSupportUtils.OverrideElement(guardianItem.Item, elementId, MoRSupportUtils.Override.Remove);
-				MoRSupportUtils.OverrideElement(Projectile, elementId, MoRSupportUtils.Override.Remove);
 			}
 			morElementIds.Clear();
 			guardianItem.MoRElements.ForEach(delegate (short elementId)
 			{
 				MoRSupportUtils.OverrideElement(guardianItem.Item, elementId, MoRSupportUtils.Override.Add);
-				MoRSupportUtils.OverrideElement(Projectile, elementId, MoRSupportUtils.Override.Add);
 				morElementIds.Add(elementId);
 			});
 		}

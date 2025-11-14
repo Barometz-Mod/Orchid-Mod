@@ -4754,6 +4754,7 @@ UI: {
 	RedemptionSupport: {
 		// Resistance: "{0}% increased {1} elemental resistance"
 		// ResistanceHeld: "{0}% increased {1} elemental resistance while held"
+		// BonusDamageDemon: Deals {0}% increased damage against demonic enemies
 	}
 }
 

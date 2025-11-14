@@ -5,10 +5,12 @@ using OrchidMod.Content.Guardian.Projectiles.Gauntlets;
 using OrchidMod.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace OrchidMod.Content.Guardian.Weapons.Gauntlets
@@ -18,6 +20,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Gauntlets
 	{
 		public override List<short> MoRElements => [MoRSupportUtils.Elements.Earth];
 		public override List<short> MoRElementsProj => [..MoRElements, MoRSupportUtils.Elements.Explosive];
+		public static readonly float MoRDemonBonusDamage = 0.25f;
 
 		public override void SafeSetDefaults()
 		{
@@ -115,6 +118,23 @@ namespace OrchidMod.Content.Guardian.Weapons.Gauntlets
 				}
 			}
 			return true;
+		}
+
+		public override void ModifyHitNPCGauntlet(Player player, NPC target, Projectile projectile, ref NPC.HitModifiers modifiers, bool charged)
+		{
+			if (MoRSupportUtils.HitDemon(target))
+			{
+				modifiers.FinalDamage *= 1f + MoRDemonBonusDamage;
+			}
+		}
+
+		public override void SafeModifyTooltips(List<TooltipLine> tooltips)
+		{
+			if (OrchidMod.ModOfRedemption == null) return;
+
+			tooltips.Add(new TooltipLine(Mod, "TooltipBonusDamage", Language.GetTextValue(
+				$"Mods.{Mod.Name}.UI.RedemptionSupport.BonusDamageDemon", MoRDemonBonusDamage * 100)
+			));
 		}
 
 		public override void AddRecipes()
