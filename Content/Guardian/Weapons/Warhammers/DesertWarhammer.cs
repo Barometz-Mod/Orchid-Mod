@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using OrchidMod.Content.Guardian.Projectiles.Warhammers;
 using OrchidMod.Utilities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -11,10 +12,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 {
 	public class DesertWarhammer : OrchidModGuardianHammer
 	{
-		public override void SafeSetStaticDefaults()
-		{
-			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Earth);
-		}
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Earth];
 
 		public override void SafeSetDefaults()
 		{

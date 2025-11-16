@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using OrchidMod.Utilities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -7,6 +9,11 @@ namespace OrchidMod.Content.Guardian.Weapons.Runes
 {
 	public class HellRune : OrchidModGuardianRune
 	{
+		public override List<short> MoRElements => [
+			MoRSupportUtils.Elements.Arcane,
+			MoRSupportUtils.Elements.Fire
+		];
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 26;

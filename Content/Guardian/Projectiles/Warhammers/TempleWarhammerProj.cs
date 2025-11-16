@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using OrchidMod.Content.Guardian.Weapons.Warhammers;
 using OrchidMod.Utilities;
 using System.Collections.Generic;
 using System.IO;
@@ -37,6 +38,8 @@ namespace OrchidMod.Content.Guardian.Projectiles.Warhammers
 			Projectile.rotation = Main.rand.NextFloat(MathHelper.Pi);
 			Projectile.timeLeft -= Main.rand.Next(40);
 			Projectile.ai[0] = Main.rand.NextFloat(-0.05f, 0.05f);
+
+			MoRSupportUtils.ApplyMoRElementsFromItem<TempleWarhammer>(Projectile, source);
 		}
 
 		public override void SendExtraAI(BinaryWriter writer)

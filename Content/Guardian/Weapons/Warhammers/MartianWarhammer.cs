@@ -2,6 +2,7 @@
 using OrchidMod.Common.ModObjects;
 using OrchidMod.Utilities;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -11,10 +12,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 {
 	public class MartianWarhammer : OrchidModGuardianHammer
 	{
-		public override void SafeSetStaticDefaults()
-		{
-			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Thunder);
-		}
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Thunder];
 
 		public override void SafeSetDefaults()
 		{

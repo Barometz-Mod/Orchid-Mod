@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using OrchidMod.Content.Guardian.Projectiles.Warhammers;
 using OrchidMod.Utilities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -10,11 +11,11 @@ namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 {
 	public class TempleWarhammer : OrchidModGuardianHammer
 	{
-		public override void SafeSetStaticDefaults()
-		{
-			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Fire);
-			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Earth);
-		}
+		public override List<short> MoRElements => [
+			MoRSupportUtils.Elements.Fire,
+			MoRSupportUtils.Elements.Earth
+		];
+		public override List<short> MoRElementsProj => [..MoRElements, MoRSupportUtils.Elements.Arcane];
 
 		public override void SafeSetDefaults()
 		{

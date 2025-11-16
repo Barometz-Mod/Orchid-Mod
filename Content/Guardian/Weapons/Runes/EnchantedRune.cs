@@ -1,4 +1,6 @@
-﻿using Terraria;
+﻿using OrchidMod.Utilities;
+using System.Collections.Generic;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -6,6 +8,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Runes
 {
 	public class EnchantedRune : OrchidModGuardianRune
 	{
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Arcane];
 
 		public override void SafeSetDefaults()
 		{

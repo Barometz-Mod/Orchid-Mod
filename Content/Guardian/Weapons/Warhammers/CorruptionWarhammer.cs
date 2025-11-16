@@ -1,4 +1,5 @@
 ﻿using OrchidMod.Utilities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 
@@ -6,10 +7,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 {
 	public class CorruptionWarhammer : OrchidModGuardianHammer
 	{
-		public override void SafeSetStaticDefaults()
-		{
-			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Shadow);
-		}
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Shadow];
 
 		public override void SafeSetDefaults()
 		{

@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using OrchidMod.Utilities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -7,6 +9,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Runes
 {
 	public class FrostRune : OrchidModGuardianRune
 	{
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Ice];
 
 		public override void SafeSetDefaults()
 		{

@@ -16,10 +16,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 {
 	public class ThoriumGrandThunderBirdWarhammer : OrchidModGuardianHammer
 	{
-		public override void SafeSetStaticDefaults()
-		{
-			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Thunder);
-		}
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Thunder];
 
 		public override void SafeSetDefaults()
 		{

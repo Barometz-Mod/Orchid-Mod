@@ -36,6 +36,7 @@ namespace OrchidMod.Content.Guardian
 		public sealed override void SetStaticDefaults()
 		{
 			SafeSetStaticDefaults();
+			MoRElements.ForEach(elementId => MoRSupportUtils.RegisterElement(Item, elementId));
 		}
 
 		public sealed override void SetDefaults()

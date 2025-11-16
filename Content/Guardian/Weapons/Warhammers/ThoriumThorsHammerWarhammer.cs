@@ -2,6 +2,7 @@
 using OrchidMod.Common.Attributes;
 using OrchidMod.Utilities;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 
@@ -10,10 +11,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 	[CrossmodContent("ThoriumMod")]
 	public class ThoriumThorsHammerWarhammer : OrchidModGuardianHammer
 	{
-		public override void SafeSetStaticDefaults()
-		{
-			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Thunder);
-		}
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Thunder];
 
 		public override void SafeSetDefaults()
 		{

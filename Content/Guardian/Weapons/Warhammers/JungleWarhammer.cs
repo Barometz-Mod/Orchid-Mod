@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using OrchidMod.Utilities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -9,10 +10,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 {
 	public class JungleWarhammer : OrchidModGuardianHammer
 	{
-		public override void SafeSetStaticDefaults()
-		{
-			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Nature);
-		}
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Nature];
 
 		public override void SafeSetDefaults()
 		{
