@@ -1,5 +1,6 @@
 using OrchidMod.Common;
 using OrchidMod.Content.Gambler.Misc;
+using OrchidMod.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -8,6 +9,11 @@ namespace OrchidMod.Content.Guardian.Accessories
 {
 	public class DungeonSpike : OrchidModGuardianEquipable
 	{
+		public override void SetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Water);
+		}
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 28;

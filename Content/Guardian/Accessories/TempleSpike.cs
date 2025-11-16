@@ -1,3 +1,4 @@
+using OrchidMod.Utilities;
 using Terraria;
 using Terraria.ID;
 
@@ -5,6 +6,12 @@ namespace OrchidMod.Content.Guardian.Accessories
 {
 	public class TempleSpike : OrchidModGuardianEquipable
 	{
+		public override void SetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Fire);
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Earth);
+		}
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 30;

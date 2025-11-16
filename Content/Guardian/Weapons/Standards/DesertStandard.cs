@@ -1,6 +1,8 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using OrchidMod.Utilities;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 
@@ -8,6 +10,8 @@ namespace OrchidMod.Content.Guardian.Weapons.Standards
 {
 	public class DesertStandard : OrchidModGuardianStandard
 	{
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Thunder];
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 38;

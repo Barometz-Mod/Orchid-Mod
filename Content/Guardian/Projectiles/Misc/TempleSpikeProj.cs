@@ -13,6 +13,13 @@ namespace OrchidMod.Content.Guardian.Projectiles.Misc
 	public class TempleSpikeProj : OrchidModGuardianProjectile
 	{
         const int maxTime = 10;
+
+		public override void SetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Projectile, MoRSupportUtils.Elements.Fire);
+			MoRSupportUtils.RegisterElement(Projectile, MoRSupportUtils.Elements.Earth);
+		}
+
 		public override void SafeSetDefaults()
 		{
 			Projectile.width = 18;

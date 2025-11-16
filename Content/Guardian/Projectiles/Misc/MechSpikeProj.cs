@@ -12,6 +12,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Misc
 {
 	public class MechSpikeProj : OrchidModGuardianProjectile
 	{
+		public override void SetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Projectile, MoRSupportUtils.Elements.Thunder);
+		}
+
 		public override void SafeSetDefaults()
 		{
 			Projectile.width = 2;

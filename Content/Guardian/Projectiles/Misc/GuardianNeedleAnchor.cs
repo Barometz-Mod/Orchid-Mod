@@ -58,6 +58,8 @@ namespace OrchidMod.Content.Guardian.Projectiles.Misc
 			HitBox = [new Rectangle(0, 0, 30, 30), new Rectangle(0, 0, 30, 30), new Rectangle(0, 0, 30, 30)];
 			OldPosition = new List<Vector2>();
 			OldRotation = new List<float>();
+
+			MoRSupportUtils.SetSpearBonus(Projectile);
 		}
 
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) => overPlayers.Add(index);

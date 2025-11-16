@@ -45,6 +45,12 @@ namespace OrchidMod.Content.Guardian
 
 		public virtual void SafeHoldItem(Player player) { }
 
+		public sealed override void SetStaticDefaults()
+		{
+			SafeSetStaticDefaults();
+			MoRElements.ForEach(elementId => MoRSupportUtils.RegisterElement(Item, elementId));
+		}
+
 		public sealed override void SetDefaults()
 		{
 			Item.DamageType = ModContent.GetInstance<GuardianDamageClass>();

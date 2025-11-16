@@ -1,5 +1,6 @@
 using OrchidMod.Assets;
 using OrchidMod.Content.General.Misc;
+using OrchidMod.Utilities;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -7,6 +8,13 @@ namespace OrchidMod.Content.Guardian.Misc
 {
 	public class HorizonDrill : LuminiteTool
 	{
+		public override void SafeSetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Arcane);
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Wind);
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Celestial);
+		}
+
 		public HorizonDrill() : base(lightColor: new(229, 181, 142), itemCloneType: ItemID.SolarFlareDrill) { }
 
 		public override int GetProjectileType()

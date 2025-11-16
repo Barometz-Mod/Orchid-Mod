@@ -25,6 +25,7 @@ namespace OrchidMod.Content.General.Misc
 
 		// ...
 
+		public virtual void SafeSetStaticDefaults() { }
 		public virtual void SafeSetDefaults() { }
 		public virtual int GetProjectileType()
 			=> ProjectileID.None;
@@ -32,6 +33,7 @@ namespace OrchidMod.Content.General.Misc
 		public sealed override void SetStaticDefaults()
 		{
 			HeldItemLayer.RegisterDrawMethod(Type, OrchidUtils.DrawSimpleItemGlowmaskOnPlayer);
+			SafeSetStaticDefaults();
 
 			// DisplayName.SetDefault(name);
 		}

@@ -5,11 +5,19 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Audio;
 using Terraria.ModLoader;
+using OrchidMod.Utilities;
+using Terraria.DataStructures;
+using OrchidMod.Content.Guardian.Weapons.Standards;
 
 namespace OrchidMod.Content.Guardian.Projectiles.Standards
 {
 	public class DesertStandardProj : OrchidModGuardianProjectile
 	{
+		public override void SetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Projectile, MoRSupportUtils.Elements.Thunder);
+		}
+
 		public override void SafeSetDefaults()
 		{
 			Projectile.width = 12;

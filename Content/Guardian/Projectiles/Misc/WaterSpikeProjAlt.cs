@@ -1,3 +1,4 @@
+using OrchidMod.Utilities;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -5,6 +6,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Misc
 {
 	public class WaterSpikeProjAlt : OrchidModGuardianProjectile
 	{
+		public override void SetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Projectile, MoRSupportUtils.Elements.Water);
+		}
+
 		public override void SafeSetDefaults()
 		{
 			Projectile.width = 2;

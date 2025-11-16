@@ -1,3 +1,4 @@
+using OrchidMod.Utilities;
 using Terraria;
 using Terraria.ID;
 
@@ -5,6 +6,11 @@ namespace OrchidMod.Content.Guardian.Accessories
 {
 	public class MechanicalSpike : OrchidModGuardianEquipable
 	{
+		public override void SetStaticDefaults()
+		{
+			MoRSupportUtils.RegisterElement(Item, MoRSupportUtils.Elements.Thunder);
+		}
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 30;
