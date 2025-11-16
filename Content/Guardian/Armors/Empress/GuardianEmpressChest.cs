@@ -1,4 +1,5 @@
 using OrchidMod.Content.Guardian.Misc;
+using OrchidMod.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -11,6 +12,7 @@ namespace OrchidMod.Content.Guardian.Armors.Empress
 	public class GuardianEmpressChest : OrchidModGuardianEquipable
 	{
 		public static LocalizedText SetBonusText { get; private set; }
+		private static readonly float MoRElementResistance = 0.08f;
 
 		public override void SetStaticDefaults()
 		{
@@ -48,6 +50,19 @@ namespace OrchidMod.Content.Guardian.Armors.Empress
 			guardian.GuardianRuneTimer += 0.5f;
 			guardian.GuardianStandardRange += 0.5f;
 			guardian.GuardianStandardTimer += 0.5f;
+
+			if (OrchidMod.ModOfRedemption != null)
+			{
+				MoRSupportUtils.IncreaseElementalResistance(player, MoRSupportUtils.Elements.Holy, MoRElementResistance);
+				MoRSupportUtils.IncreaseElementalResistance(player, MoRSupportUtils.Elements.Celestial, MoRElementResistance);
+
+				player.setBonus += "\n" + Language.GetTextValue(
+					$"Mods.{Mod.Name}.UI.RedemptionSupport.Resistance", MoRElementResistance * 100, MoRSupportUtils.GetElementTooltip(MoRSupportUtils.Elements.Holy)
+				);
+				player.setBonus += "\n" + Language.GetTextValue(
+					$"Mods.{Mod.Name}.UI.RedemptionSupport.Resistance", MoRElementResistance * 100, MoRSupportUtils.GetElementTooltip(MoRSupportUtils.Elements.Celestial)
+				);
+			}
 		}
 
 		public override void AddRecipes()

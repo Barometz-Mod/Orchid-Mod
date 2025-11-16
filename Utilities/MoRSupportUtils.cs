@@ -20,6 +20,7 @@ namespace OrchidMod.Utilities
 
 		public static class Elements
 		{
+			public const short None = 0;
 			public const short Arcane = 1;
 			public const short Fire = 2;
 			public const short Water = 3;
@@ -229,6 +230,7 @@ namespace OrchidMod.Utilities
 			var redemptionMod = OrchidMod.ModOfRedemption;
 			if (redemptionMod == null) return "";
 
+			if (elementId == Elements.None) return "";
 			var elementName = elementId switch
 			{
 				Elements.Fire => "Fire",
@@ -243,7 +245,7 @@ namespace OrchidMod.Utilities
 				Elements.Poison => "Poison",
 				Elements.Blood => "Blood",
 				Elements.Psychic => "Psychic",
-				Elements.Celestial => "Celestial",
+				Elements.Celestial => "Cosmic",
 				Elements.Explosive => "Explosive",
 				_ => "Arcane",
 			};

@@ -1,3 +1,4 @@
+using OrchidMod.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -8,6 +9,8 @@ namespace OrchidMod.Content.Guardian.Armors.OreHelms
 	[AutoloadEquip(EquipType.Head)]
 	public class GuardianPalladiumHead : OrchidModGuardianEquipable
 	{
+		private static readonly float MoRElementResistance = 0.2f;
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 22;
@@ -35,6 +38,15 @@ namespace OrchidMod.Content.Guardian.Armors.OreHelms
 		{
 			player.setBonus = Language.GetTextValue("ArmorSetBonus.Palladium");
 			player.onHitRegen = true;
+
+			if (OrchidMod.ModOfRedemption != null)
+			{
+				MoRSupportUtils.IncreaseElementalResistance(player, MoRSupportUtils.Elements.Holy, MoRElementResistance);
+
+				player.setBonus += "\n" + Language.GetTextValue(
+					$"Mods.{Mod.Name}.UI.RedemptionSupport.Resistance", MoRElementResistance * 100, MoRSupportUtils.GetElementTooltip(MoRSupportUtils.Elements.Holy)
+				);
+			}
 		}
 
 		public override void AddRecipes()

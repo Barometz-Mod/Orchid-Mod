@@ -1,3 +1,4 @@
+using OrchidMod.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -10,6 +11,7 @@ namespace OrchidMod.Content.Guardian.Armors.Meteorite
 	public class GuardianMeteoriteHead : OrchidModGuardianEquipable
 	{
 		public static LocalizedText SetBonusText { get; private set; }
+		private static readonly float MoRElementResistance = 0.2f;
 
 		public override void SetStaticDefaults()
 		{
@@ -42,6 +44,15 @@ namespace OrchidMod.Content.Guardian.Armors.Meteorite
 			OrchidGuardian modPlayer = player.GetModPlayer<OrchidGuardian>();
 			player.setBonus = SetBonusText.Value;
 			modPlayer.GuardianMeteorite = true;
+
+			if (OrchidMod.ModOfRedemption != null)
+			{
+				MoRSupportUtils.IncreaseElementalResistance(player, MoRSupportUtils.Elements.Fire, MoRElementResistance);
+
+				player.setBonus += "\n" + Language.GetTextValue(
+					$"Mods.{Mod.Name}.UI.RedemptionSupport.Resistance", MoRElementResistance * 100, MoRSupportUtils.GetElementTooltip(MoRSupportUtils.Elements.Fire)
+				);
+			}
 		}
 
 		public override void AddRecipes()

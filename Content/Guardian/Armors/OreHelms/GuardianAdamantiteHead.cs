@@ -1,3 +1,4 @@
+using OrchidMod.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -9,6 +10,7 @@ namespace OrchidMod.Content.Guardian.Armors.OreHelms
 	public class GuardianAdamantiteHead : OrchidModGuardianEquipable
 	{
 		public static LocalizedText SetBonusText { get; private set; }
+		private static readonly float MoRElementResistance = 0.2f;
 
 		public override void SetStaticDefaults()
 		{
@@ -43,6 +45,15 @@ namespace OrchidMod.Content.Guardian.Armors.OreHelms
 			player.setBonus = SetBonusText.Value;
 			OrchidGuardian modPlayer = player.GetModPlayer<OrchidGuardian>();
 			modPlayer.GuardianGuardRecharge += 0.8f;
+
+			if (OrchidMod.ModOfRedemption != null)
+			{
+				MoRSupportUtils.IncreaseElementalResistance(player, MoRSupportUtils.Elements.Earth, MoRElementResistance);
+
+				player.setBonus += "\n" + Language.GetTextValue(
+					$"Mods.{Mod.Name}.UI.RedemptionSupport.Resistance", MoRElementResistance * 100, MoRSupportUtils.GetElementTooltip(MoRSupportUtils.Elements.Earth)
+				);
+			}
 		}
 
 		public override void ArmorSetShadows(Player player)

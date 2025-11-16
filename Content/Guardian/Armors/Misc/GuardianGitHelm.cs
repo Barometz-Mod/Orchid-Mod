@@ -1,3 +1,5 @@
+using OrchidMod.Utilities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -9,6 +11,20 @@ namespace OrchidMod.Content.Guardian.Armors.Misc
 	public class GuardianGitHelm: OrchidModGuardianEquipable
 	{
 		public static LocalizedText SetBonusText { get; private set; }
+		private static readonly float MoRElementResistance = 0.2f;
+
+		public GitHelmSetBonusType SetBonusType;
+		private static readonly Dictionary<(int body, int legs), GitHelmSetBonusType> ArmorSetBonuses = new()
+		{
+			{ (ItemID.CopperChainmail, ItemID.CopperGreaves), GitHelmSetBonusType.COPPER },
+			{ (ItemID.TinChainmail, ItemID.TinGreaves), GitHelmSetBonusType.TIN },
+			{ (ItemID.IronChainmail, ItemID.IronGreaves), GitHelmSetBonusType.IRON },
+			{ (ItemID.LeadChainmail, ItemID.LeadGreaves), GitHelmSetBonusType.LEAD },
+			{ (ItemID.SilverChainmail, ItemID.SilverGreaves), GitHelmSetBonusType.SILVER },
+			{ (ItemID.TungstenChainmail, ItemID.TungstenGreaves), GitHelmSetBonusType.TUNGSTEN },
+			{ (ItemID.GoldChainmail, ItemID.GoldGreaves), GitHelmSetBonusType.GOLD },
+			{ (ItemID.PlatinumChainmail, ItemID.PlatinumGreaves), GitHelmSetBonusType.PLATINUM },
+		};
 
 		public override void SetStaticDefaults()
 		{
@@ -37,20 +53,22 @@ namespace OrchidMod.Content.Guardian.Armors.Misc
 			Mod ThoriumMod = OrchidMod.ThoriumMod;
 			if (ThoriumMod != null)
 			{
-				if (body.type == ThoriumMod.Find<ModItem>("ThoriumMail").Type && legs.type == ThoriumMod.Find<ModItem>("ThoriumGreaves").Type)
+				if (body.type == ThoriumMod.Find<ModItem>("ThoriumMail").Type
+					&& legs.type == ThoriumMod.Find<ModItem>("ThoriumGreaves").Type)
 				{
+					SetBonusType = GitHelmSetBonusType.THORIUM;
 					return true;
 				}
 			}
 
-			return (body.type == ItemID.CopperChainmail && legs.type == ItemID.CopperGreaves)
-				|| (body.type == ItemID.TinChainmail && legs.type == ItemID.TinGreaves)
-				|| (body.type == ItemID.IronChainmail && legs.type == ItemID.IronGreaves)
-				|| (body.type == ItemID.LeadChainmail && legs.type == ItemID.LeadGreaves)
-				|| (body.type == ItemID.SilverChainmail && legs.type == ItemID.SilverGreaves)
-				|| (body.type == ItemID.TungstenChainmail && legs.type == ItemID.TungstenGreaves)
-				|| (body.type == ItemID.GoldChainmail && legs.type == ItemID.GoldGreaves)
-				|| (body.type == ItemID.PlatinumChainmail && legs.type == ItemID.PlatinumGreaves);
+			if (ArmorSetBonuses.TryGetValue((body.type, legs.type), out GitHelmSetBonusType type))
+			{
+				SetBonusType = type;
+				return true;
+			}
+
+			SetBonusType = GitHelmSetBonusType.NONE;
+			return false;
 		}
 
 		public override void UpdateArmorSet(Player player)
@@ -58,6 +76,40 @@ namespace OrchidMod.Content.Guardian.Armors.Misc
 			OrchidGuardian modPlayer = player.GetModPlayer<OrchidGuardian>();
 			player.setBonus = SetBonusText.Value;
 			modPlayer.GuardianGit = true;
+
+			if (OrchidMod.ModOfRedemption != null)
+			{
+				short elementId = SetBonusType switch
+				{
+					GitHelmSetBonusType.COPPER or GitHelmSetBonusType.TIN => MoRSupportUtils.Elements.Thunder,
+					GitHelmSetBonusType.IRON or GitHelmSetBonusType.LEAD => MoRSupportUtils.Elements.Earth,
+					GitHelmSetBonusType.GOLD => MoRSupportUtils.Elements.Arcane,
+					_ => MoRSupportUtils.Elements.None
+				};
+
+				if (elementId != MoRSupportUtils.Elements.None)
+				{
+					MoRSupportUtils.IncreaseElementalResistance(player, elementId, MoRElementResistance);
+
+					player.setBonus += "\n" + Language.GetTextValue(
+						$"Mods.{Mod.Name}.UI.RedemptionSupport.Resistance", MoRElementResistance * 100, MoRSupportUtils.GetElementTooltip(elementId)
+					);
+				}
+			}
 		}
+	}
+
+	public enum GitHelmSetBonusType : byte
+	{
+		NONE = 0,
+		COPPER = 1,
+		TIN = 2,
+		IRON = 3,
+		LEAD = 4,
+		SILVER = 5,
+		TUNGSTEN = 6,
+		GOLD = 7,
+		PLATINUM = 8,
+		THORIUM = 9,
 	}
 }

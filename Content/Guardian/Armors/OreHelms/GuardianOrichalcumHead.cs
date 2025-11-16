@@ -1,3 +1,4 @@
+using OrchidMod.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -8,6 +9,8 @@ namespace OrchidMod.Content.Guardian.Armors.OreHelms
 	[AutoloadEquip(EquipType.Head)]
 	public class GuardianOrichalcumHead : OrchidModGuardianEquipable
 	{
+		private static readonly float MoRElementResistance = 0.2f;
+
 		public override void SetStaticDefaults()
 		{
 			ArmorIDs.Head.Sets.DrawHead[Item.headSlot] = false;
@@ -41,6 +44,15 @@ namespace OrchidMod.Content.Guardian.Armors.OreHelms
 		{
 			player.setBonus = Language.GetTextValue("ArmorSetBonus.Orichalcum");
 			player.onHitPetal = true;
+
+			if (OrchidMod.ModOfRedemption != null)
+			{
+				MoRSupportUtils.IncreaseElementalResistance(player, MoRSupportUtils.Elements.Nature, MoRElementResistance);
+
+				player.setBonus += "\n" + Language.GetTextValue(
+					$"Mods.{Mod.Name}.UI.RedemptionSupport.Resistance", MoRElementResistance * 100, MoRSupportUtils.GetElementTooltip(MoRSupportUtils.Elements.Nature)
+				);
+			}
 		}
 
 		public override void AddRecipes()
