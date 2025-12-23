@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Content.General.Prefixes;
+using OrchidMod.Utilities;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -12,6 +14,9 @@ namespace OrchidMod.Content.Guardian.Weapons.Gauntlets
 	public class BeeGauntlet : OrchidModGuardianGauntlet
 	{
 		public int FlightAnimation = 0;
+
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Nature];
+		public override List<short> MoRElementsProj => MoRElements;
 
 		public override void SafeSetDefaults()
 		{

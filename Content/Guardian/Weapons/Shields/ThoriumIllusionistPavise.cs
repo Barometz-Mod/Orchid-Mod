@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using OrchidMod.Content.Guardian.Projectiles.Shields;
+using OrchidMod.Utilities;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -16,6 +17,9 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 		public static List<int> TypesScythe;
 		public static List<int> TypesStinger;
 		public static List<int> TypesFeather;
+
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Arcane];
+		public override List<short> MoRElementsProj => MoRElements;
 
 		public override void SafeSetDefaults()
 		{

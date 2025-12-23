@@ -1,5 +1,8 @@
+using OrchidMod.Content.Guardian.Weapons.Shields;
+using OrchidMod.Utilities;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace OrchidMod.Content.Guardian.Projectiles.Shields
@@ -17,6 +20,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Shields
 			Projectile.penetrate = 1;
 			Projectile.extraUpdates = 1;
 			Projectile.alpha = 255;
+		}
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			MoRSupportUtils.ApplyMoRElementsFromItem<ThoriumIllusionistPavise>(Projectile, source);
 		}
 
 		public override void AI()

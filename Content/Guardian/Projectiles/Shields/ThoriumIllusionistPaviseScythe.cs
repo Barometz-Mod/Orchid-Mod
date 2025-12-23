@@ -1,6 +1,9 @@
 using Microsoft.Xna.Framework;
+using OrchidMod.Content.Guardian.Weapons.Shields;
+using OrchidMod.Utilities;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace OrchidMod.Content.Guardian.Projectiles.Shields
@@ -16,6 +19,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Shields
 			Projectile.timeLeft = 180;
 			Projectile.scale = 1f;
 			Projectile.penetrate = 5;
+		}
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			MoRSupportUtils.ApplyMoRElementsFromItem<ThoriumIllusionistPavise>(Projectile, source);
 		}
 
 		public override Color? GetAlpha(Color lightColor)

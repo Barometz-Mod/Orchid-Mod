@@ -1,12 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Core.Utils;
-using OrchidMod.Content.Guardian.Projectiles.Quarterstaves;
+using OrchidMod.Content.Guardian.Weapons.Gauntlets;
 using OrchidMod.Utilities;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 
@@ -30,6 +31,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Gauntlets
 			Projectile.alpha = 255;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 20;
+		}
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			MoRSupportUtils.ApplyMoRElementsFromItem<GlowingMushroomGauntlet>(Projectile, source);
 		}
 
 		public override void ModifyDamageHitbox(ref Rectangle hitbox)

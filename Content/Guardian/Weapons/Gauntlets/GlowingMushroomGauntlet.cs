@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using OrchidMod.Content.Guardian.Projectiles.Gauntlets;
+using OrchidMod.Utilities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -8,6 +10,9 @@ namespace OrchidMod.Content.Guardian.Weapons.Gauntlets
 {
 	public class GlowingMushroomGauntlet : OrchidModGuardianGauntlet
 	{
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Nature];
+		public override List<short> MoRElementsProj => MoRElements;
+
 		public override void SafeSetDefaults()
 		{
 			Item.width = 26;

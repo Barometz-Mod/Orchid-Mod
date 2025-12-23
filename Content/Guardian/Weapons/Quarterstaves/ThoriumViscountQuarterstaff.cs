@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Common.ModObjects;
 using OrchidMod.Content.Guardian.Projectiles.Quarterstaves;
+using OrchidMod.Utilities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,6 +15,9 @@ namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 		public int IsCounterAttacking = 0;
 		public Vector2 Velocity = Vector2.Zero;
 		public const float BatSpeed = 1.5f;
+
+		public override List<short> MoRElements => [MoRSupportUtils.Elements.Blood];
+		public override List<short> MoRElementsProj => MoRElements;
 
 		public override void SafeSetDefaults()
 		{

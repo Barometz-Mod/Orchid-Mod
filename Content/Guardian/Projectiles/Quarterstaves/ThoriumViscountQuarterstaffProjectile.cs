@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Content.Guardian.Weapons.Quarterstaves;
+using OrchidMod.Utilities;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,6 +30,11 @@ namespace OrchidMod.Content.Guardian.Projectiles.Quarterstaves
 			Projectile.tileCollide = false;
 			Bats = new List<ViscountQuarterstaffBat>();
 			TextureGlow ??= ModContent.Request<Texture2D>(Texture + "_Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+		}
+
+		public override void OnSpawn(IEntitySource source)
+		{
+			MoRSupportUtils.ApplyMoRElementsFromItem<ThoriumViscountQuarterstaff>(Projectile, source);
 		}
 
 		public override void AI()
