@@ -31,6 +31,13 @@ namespace OrchidMod.Content.Guardian
 		public virtual bool PreSwingAI(Player player, OrchidGuardian guardian, Projectile anchor) { return true; }
 		public virtual void OnParryQuarterstaff(Player player, OrchidGuardian guardian, Entity aggressor, Projectile anchor) { } // Called on parrying anything
 		public virtual void ExtraAIQuarterstaff(Player player, OrchidGuardian guardian, Projectile projectile) { } // Called at the end of the Anchor Projectile AI
+		public virtual void ExtraAIQuarterstaffJabbing(Player player, OrchidGuardian guardian, Projectile projectile) { } // Called while jabbing
+		public virtual void ExtraAIQuarterstaffBlocking(Player player, OrchidGuardian guardian, Projectile projectile) { } // Called while blocking
+		public virtual void ExtraAIQuarterstaffSwinging(Player player, OrchidGuardian guardian, Projectile projectile) { } // Called while swinging
+		public virtual void ExtraAIQuarterstaffParrying(Player player, OrchidGuardian guardian, Projectile projectile) { } // Called while parrying
+		public virtual void ExtraAIQuarterstaffCharging(Player player, OrchidGuardian guardian, Projectile projectile) { } // Called while chargins
+		public virtual void ExtraAIQuarterstaffCounterattacking(Player player, OrchidGuardian guardian, Projectile projectile) { } // Called while counterattacking
+		public virtual void ExtraAIQuarterstaffIdle(Player player, OrchidGuardian guardian, Projectile projectile) { } // Called while idle
 		public virtual void PostDrawQuarterstaff(SpriteBatch spriteBatch, Projectile projectile, Player player, Color lightColor) { } // Called after the item is done being drawn
 		public virtual bool PreDrawQuarterstaff(SpriteBatch spriteBatch, Projectile projectile, Player player, ref Color lightColor) { return true; } // Return false to prevent normal draw code
 		public virtual Color GetColor(bool offHand) => Color.White;
@@ -114,7 +121,7 @@ namespace OrchidMod.Content.Guardian
 					{
 						bool shouldBlock = Main.mouseRight && Main.mouseRightRelease;
 						bool shouldCharge = Main.mouseLeft;
-
+						
 						if (ModContent.GetInstance<OrchidClientConfig>().GuardianSwapGauntletImputs)
 						{
 							shouldBlock = Main.mouseLeft && Main.mouseLeftRelease;
@@ -134,7 +141,7 @@ namespace OrchidMod.Content.Guardian
 							SoundEngine.PlaySound(SoundID.Item37, player.Center);
 						}
 
-						if (shouldCharge && guardian.GuardianItemCharge == 0f && proj.ai[0] == 0f && proj.ai[2] >= -10f)
+						if (shouldCharge && guardian.GuardianItemCharge == 0f && proj.ai[0] == 0f && proj.ai[2] >= -10f && (proj.ai[2] <= 0 || guardian.GuardianStaffRocket == 0))
 						{
 							proj.ai[0] = 1f;
 							proj.ai[2] = 0f;

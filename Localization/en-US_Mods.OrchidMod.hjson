@@ -1772,12 +1772,7 @@ Items: {
 
 	OrchidEmblem: {
 		DisplayName: Orchid Emblem
-		Tooltip:
-			'''
-			While the Guardians can continue their playthrough, the journey for both Alchemists and Gamblers stops here
-			A complete Shaman overhaul is on the way, and the class will come back soon!
-			Please, come and say hi on Discord if you want to support me ;)
-			'''
+		Tooltip: +15% orchid damage
 	}
 
 	RCRemote: {
@@ -3799,6 +3794,11 @@ Items: {
 		Tooltip: Counterattacks release a noxious cloud
 	}
 
+	ThoriumViscountQuarterstaff: {
+		DisplayName: Pipistrelle
+		Tooltip: Counterattacks turn you into a swarm of bats, ignoring 20 defense
+	}
+
 	ThoriumThoriumQuarterstaff: {
 		DisplayName: Thorium Quarterstaff
 		Tooltip: Releases sparks on hit
@@ -3900,6 +3900,19 @@ Items: {
 		Tooltip:
 			'''
 			12% increased movement speed
+			Use the 'Grapple' key to dash while shapeshifted
+			Hold the 'Grapple' key to use a hook normally
+			'''
+	}
+
+	ShawlPhoenix: {
+		DisplayName: Shawl of the Phoenix
+		Tooltip:
+			'''
+			12% increased movement speed
+			Provides 7 seconds of immunity to lava
+			Grants immunity to fire blocks
+			Reduces damage from touching lava
 			Use the 'Grapple' key to dash while shapeshifted
 			Hold the 'Grapple' key to use a hook normally
 			'''
@@ -4042,6 +4055,118 @@ Items: {
 	GuardianRegenPotion: {
 		DisplayName: Tenacity Potion
 		Tooltip: Allows regenerating up to maximum guards and slams
+	}
+
+	HeavyChain: {
+		DisplayName: Heavy Chain
+		Tooltip: Increases warhammer swing range
+	}
+
+	HeavyChainTest: {
+		DisplayName: Heavy Chain (test)
+		Tooltip: Increases warhammer swing range more than the Heavy Chain (non-test) and is red
+	}
+
+	BeeGauntlet: {
+		DisplayName: Bumblebeaters
+		Tooltip:
+			'''
+			Press DOWN to control descent while charging
+			Releases bees on parry and slam
+			'''
+	}
+
+	MahoganyPavise: {
+		DisplayName: Rich Mahogany Pavise
+		Tooltip: ""
+	}
+
+	BorealQuarterstaff: {
+		DisplayName: Boreal Wood Quarterstaff
+		Tooltip: ""
+	}
+
+	ShadewoodWarhammer: {
+		DisplayName: Shadewood Warhammer
+		Tooltip: ""
+	}
+
+	EbonwoodWarhammer: {
+		DisplayName: Ebonwood Warhammer
+		Tooltip: ""
+	}
+
+	PearlwoodPavise: {
+		DisplayName: Pearlwood Pavise
+		Tooltip: ""
+	}
+
+	AshWoodPavise: {
+		DisplayName: Ash Wood Pavise
+		Tooltip: ""
+	}
+
+	ThoriumIllusionistPavise: {
+		DisplayName: Reflection
+		Tooltip: Reflects blocked projectiles
+	}
+
+	ThoriumYewGauntlet: {
+		DisplayName: Goblin War Claw
+		Tooltip: Fully charge to fire a grappling claw
+		PullOnKill: Pulls on kill, Right click to deactivate
+		NoPullOnKill: Does not pull on kill, Right click to activate
+	}
+
+	ThoriumEvergreenWoodQuarterstaff: {
+		DisplayName: Evergreen Wood Quarterstaff
+		Tooltip: ""
+	}
+
+	ThoriumDeadwoodGauntlet: {
+		DisplayName: Deadwood Gauntlet
+		Tooltip: ""
+	}
+
+	GlowingMushroomGauntlet: {
+		DisplayName: Fistipuffs
+		Tooltip: Fully charge to release damaging spores
+	}
+
+	StaffRocketYellow: {
+		DisplayName: Yellow Staff-Mounted Propulsion System
+		Tooltip:
+			'''
+			Left click while parrying with a quarterstaff to dash
+			Costs 1 slam
+			'''
+	}
+
+	StaffRocketRed: {
+		DisplayName: Red Staff-Mounted Propulsion System
+		Tooltip:
+			'''
+			Left click while parrying with a quarterstaff to dash
+			Costs 1 slam
+			'''
+	}
+
+	StaffRocketGreen: {
+		DisplayName: Green Staff-Mounted Propulsion System
+		Tooltip:
+			'''
+			Left click while parrying with a quarterstaff to dash
+			Costs 1 slam
+			'''
+	}
+
+	StaffRocketBlue: {
+		DisplayName: Blue Staff-Mounted Propulsion System
+		Tooltip:
+			'''
+			Left click while parrying with a quarterstaff to dash
+			Costs 1 slam
+			'''
 	}
 }
 
@@ -4517,8 +4642,19 @@ Projectiles: {
 	DemoniteShieldProjectile.DisplayName: Veil of Night
 	SpectreQuarterstaffProj.DisplayName: Spectre Quarterstaff Proj
 	GuardianNeedleAnchor.DisplayName: Honeysteel Needle
-	CrystalGauntletProjectile.DisplayName: Crystal Gauntlet Projectile
+	CrystalGauntletProjectile.DisplayName: Crystal
 	StarKO.DisplayName: Star K.O.
+	ThoriumViscountQuarterstaffProjectile.DisplayName: Bat Swarm
+	ThoriumIllusionistPaviseArrow.DisplayName: Illusion
+	ThoriumIllusionistPaviseBoulder.DisplayName: Illusion
+	ThoriumIllusionistPaviseLaser.DisplayName: Illusion
+	ThoriumIllusionistPaviseStinger.DisplayName: Illusion
+	ThoriumIllusionistPaviseMagic.DisplayName: Illusion
+	ThoriumIllusionistPaviseFeather.DisplayName: Illusion
+	ThoriumIllusionistPaviseScythe.DisplayName: Illusion
+	ThoriumYewGauntletProjectile.DisplayName: Yew Grappleclaw
+	GlowingMushroomGauntletProjectile.DisplayName: Glowspores
+	StaffRocketProjectile.DisplayName: Staff Rocket Projectile
 }
 
 Configs: {

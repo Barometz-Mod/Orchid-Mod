@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Common;
 using OrchidMod.Content.General.Prefixes;
+using OrchidMod.Content.Guardian.Projectiles.Misc;
 using OrchidMod.Utilities;
 using System;
 using System.Collections.Generic;
@@ -152,7 +153,7 @@ namespace OrchidMod.Content.Guardian
 					Projectile.ai[2]--;
 					if (owner.immune)
 					{
-						if (owner.eocHit != -1)
+						if (owner.eocHit != -1 && owner.eocDash > 0)
 						{
 							guardian.DoParryItemParry(Main.npc[owner.eocHit]);
 						}
@@ -174,6 +175,18 @@ namespace OrchidMod.Content.Guardian
 					{
 						ResetSize();
 					}
+
+					if (guardian.GuardianStaffRocket > 0 && guardian.GuardianStaffRocketCooldown <= 0 && Main.mouseLeft && Main.mouseLeftRelease && IsLocalOwner && guardian.UseSlam(1, true)) 
+					{ // Staff Rocket dash
+					  // spawning a projectile makes it easy to sync the effects & direction of the dash
+						int projectileType = ModContent.ProjectileType<StaffRocketProjectile>();
+						Vector2 velocity = Vector2.Normalize(Main.MouseWorld - owner.MountedCenter);
+						Projectile.NewProjectile(owner.GetSource_ItemUse(QuarterstaffItem), owner.MountedCenter, velocity, projectileType, 0, 0f, owner.whoAmI, ai1: guardian.GuardianStaffRocket);
+						guardian.UseSlam(1);
+						guardian.GuardianStaffRocketCooldown = 45;
+					}
+
+					guardianItem.ExtraAIQuarterstaffBlocking(owner, guardian, Projectile);
 				}
 				else if (Projectile.ai[2] < 0f)
 				{ // Counterattacking
@@ -260,6 +273,8 @@ namespace OrchidMod.Content.Guardian
 							}
 						}
 					}
+
+					guardianItem.ExtraAIQuarterstaffCounterattacking(owner, guardian, Projectile);
 				}
 				else if (Projectile.ai[0] == 1f)
 				{ // Being charged by the player
@@ -329,6 +344,8 @@ namespace OrchidMod.Content.Guardian
 					{
 						ResetSize();
 					}
+
+					guardianItem.ExtraAIQuarterstaffCharging(owner, guardian, Projectile);
 				}
 				else if (Projectile.ai[0] < 0)
 				{ // Jabbing
@@ -421,6 +438,8 @@ namespace OrchidMod.Content.Guardian
 							}
 						}
 					}
+
+					guardianItem.ExtraAIQuarterstaffJabbing(owner, guardian, Projectile);
 				}
 				else if (Projectile.ai[0] > 1f)
 				{ // Swinging (charged attack)
@@ -510,6 +529,8 @@ namespace OrchidMod.Content.Guardian
 						Projectile.ai[1] = 0f;
 						Projectile.friendly = false;
 					}
+
+					guardianItem.ExtraAIQuarterstaffSwinging(owner, guardian, Projectile);
 				}
 				else
 				{ // Idle - guarterstaff is held further and lower
@@ -528,6 +549,8 @@ namespace OrchidMod.Content.Guardian
 						OldPosition.RemoveAt(0);
 						OldRotation.RemoveAt(0);
 					}
+
+					guardianItem.ExtraAIQuarterstaffIdle(owner, guardian, Projectile);
 				}
 
 				// Hitbox management for jabs and swings

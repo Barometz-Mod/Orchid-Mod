@@ -71,6 +71,9 @@ namespace OrchidMod
 		public bool GuardianBronzeShieldBuff = false;
 		public float GuardianBronzeShieldDamage = 0;
 		public bool GuardianBronzeShieldProtection = false;
+		public float GuardianChain = 0f; // Increases the swing range on Warhammers (additive, 16f = 1 tile)
+		public string GuardianChainTexture = null; // Used to draw the warhammer chain
+		public int GuardianStaffRocket = 0; // If > 0, the player can dash by spending slams with a quarterstaff (1,2,3,4 = red,green,blue,yellow)
 
 		// Dynamic gameplay and UI fields
 
@@ -102,6 +105,8 @@ namespace OrchidMod
 		public List<BlockedEnemy> GuardianBlockedEnemies = new List<BlockedEnemy>();
 		public List<Projectile> RuneProjectiles = new List<Projectile>();
 		public Projectile GuardianCurrentStandardAnchor;
+		public float GauntletSlamPool = 0f; // How much slam charge will be granted by hitting the next punch
+		public int GuardianStaffRocketCooldown = 0; // Cooldown between rocket dashes
 
 		public const int GuardianRechargeTime = 600;
 
@@ -201,7 +206,7 @@ namespace OrchidMod
 				if (GuardianJewelerGauntlet == (byte)JewelerGauntletGem.EMERALD) modPlayer.OrchidDoubleDash = true;
 				if (GuardianJewelerGauntlet == (byte)JewelerGauntletGem.SAPPHIRE) Player.GetJumpState(ExtraJump.CloudInABottle).Enable();
 				if (GuardianJewelerGauntlet == (byte)JewelerGauntletGem.AQUAMARINE) Player.trident = true;
-				if (GuardianJewelerGauntlet == (byte)JewelerGauntletGem.TOPAZ) ParryInvincibilityBonus += 60;
+				if (GuardianJewelerGauntlet == (byte)JewelerGauntletGem.TOPAZ) ParryInvincibilityBonus += 40;
 				GuardianJewelerGauntlet = 0;
 			}
 			
@@ -259,6 +264,11 @@ namespace OrchidMod
 				GuardianSlamRecharging++;
 			}
 
+			if (GuardianStaffRocketCooldown > 0)
+			{
+				GuardianStaffRocketCooldown--;
+			}
+
 			if (GuardianItemCharge > 0)
 			{
 				ChargeHoldTimer++;
@@ -266,6 +276,20 @@ namespace OrchidMod
 			else
 			{
 				ChargeHoldTimer = 0;
+			}
+
+			if (Player.HeldItem.ModItem is OrchidModGuardianGauntlet)
+			{
+				GauntletSlamPool += 0.0017f; // charges in 5 seconds
+
+				if (GauntletSlamPool > 0.5f)
+				{
+					GauntletSlamPool = 0.5f;
+				}
+			}
+			else
+			{
+				GauntletSlamPool = 0f;
 			}
 
 			if (GuardianCounter)
@@ -326,6 +350,9 @@ namespace OrchidMod
 			GuardianMeleeSpeed = 1f;
 			GuardianWeaponScale = 1f;
 			ParryInvincibilityBonus = 0;
+			GuardianChain = 0f;
+			GuardianStaffRocket = 0;
+			GuardianChainTexture = null;
 			if (!GuardianBronzeShieldBuff) GuardianBronzeShieldDamage = 0;
 
 			GuardianMeteorite = false;
@@ -687,13 +714,15 @@ namespace OrchidMod
 		{ // Called anytime the player blocks/parries their first NPC
 			OnBlockAnyFirst(anchor, ref toAdd, parry);
 
-			if (anchor.ModProjectile is GuardianShieldAnchor shieldAnchor)
+			if (anchor.ModProjectile is GuardianShieldAnchor shieldAnchor && Player.whoAmI == Main.myPlayer)
 			{
 				if (GuardianSpikeDamage > 0)
 				{
 					float damage = Player.statDefense * GuardianSpikeDamage;
 
 					damage = GetGuardianDamage(damage);
+					if (damage < 1) damage = 1;
+					if (damage > 500) damage = 500;
 					bool crit = Main.rand.NextFloat(100) < anchor.CritChance;
 					Player.ApplyDamageToNPC(target, (int)damage, 0f, Player.direction, crit, ModContent.GetInstance<GuardianDamageClass>());
 				}
@@ -802,7 +831,7 @@ namespace OrchidMod
 			if (Player.HeldItem.ModItem is OrchidModGuardianParryItem parryItem)
 			{
 				int intendedImmunityLength = parryItem.InvincibilityDuration + ParryInvincibilityBonus;
-				if (Player.longInvince) intendedImmunityLength += 40;
+				if (Player.longInvince) intendedImmunityLength += 20;
 				modPlayer.PlayerImmunity = intendedImmunityLength;
 				Player.immuneTime = intendedImmunityLength;
 				Player.immune = true;
@@ -834,6 +863,7 @@ namespace OrchidMod
 				if (anchor != null)
 				{
 					parryItem.OnParry(Player, this, aggressor, anchor);
+					DoParryItemParrySpecialCases(anchor);
 					//int toAdd = (anchor.type == anchorTypes[0]) ? 0 : 1;
 					int toAdd = (anchor.ModProjectile is GuardianQuarterstaffAnchor) ? 0 : 1; // Gives 0 slam for a quarterstaff parry, 1 for other items
 
@@ -858,6 +888,110 @@ namespace OrchidMod
 					}
 				}
 				parryItem.PlayParrySound(Player, this, anchor);
+			}
+		}
+
+		public void DoParryItemParrySpecialCases(Projectile anchor)
+		{ // I kinda hate this, so I'll leave it as a separate method in case we want to delete it.
+			if (Player.whoAmI == Main.myPlayer)
+			{
+				if (Player.panic)
+				{
+					Player.AddBuff(BuffID.Panic, 480, false);
+				}
+
+				if (OrchidMod.ThoriumMod != null)
+				{
+					int beeDamage = 30; // public static readonly int BeeDamage = 30;
+					for (int i = 3; i < 10; i ++)
+					{
+						Item item = Player.armor[i];
+						if (item.type == OrchidMod.ThoriumMod.Find<ModItem>("SweetVengeance").Type)
+						{ // Adapted from ThoriumPlayer.cs (even though it doesn't work with Hive Pack and World Difficulty)
+							for (int index = 0; index < Main.rand.Next(2, 5); ++index)
+								Projectile.NewProjectile(Player.GetSource_Accessory(item), Player.Center.X, Player.Center.Y, Main.rand.Next(-2, 2), Main.rand.Next(-2, 2), ProjectileID.Bee, beeDamage, 1f, Main.myPlayer, 0.0f, 0.0f, 0.0f);
+							Player.AddBuff(BuffID.Honey, 300, false);
+							break;
+						}
+					}
+				}
+
+				if (Player.honeyCombItem != null && !Player.honeyCombItem.IsAir)
+				{ // adapted from Player.cs
+					int nbBees = 1;
+					if (Main.rand.Next(3) == 0)
+						nbBees++;
+
+					if (Main.rand.Next(3) == 0)
+						nbBees++;
+
+					if (Player.strongBees && Main.rand.Next(3) == 0)
+						nbBees++;
+
+					float beeDamage = 13f;
+					if (Player.strongBees)
+						beeDamage = 18f;
+
+					if (Main.masterMode)
+						beeDamage *= 2f;
+
+					else if (Main.expertMode)
+						beeDamage *= 1.5f;
+
+					for (int count = 0; count < nbBees; count++)
+					{
+						float speedX = (float)Main.rand.Next(-35, 36) * 0.02f;
+						float speedY = (float)Main.rand.Next(-35, 36) * 0.02f;
+						Projectile.NewProjectile(Player.GetSource_Accessory(Player.honeyCombItem), Player.Center.X, Player.Center.Y, speedX, speedY, Player.beeType(), Player.beeDamage((int)beeDamage), Player.beeKB(0f), Main.myPlayer);
+					}
+
+					Player.AddBuff(BuffID.Honey, 300, false);
+				}
+
+				if (Player.starCloakItem != null && !Player.starCloakItem.IsAir)
+				{ // Adapted from player.cs
+					for (int count = 0; count < 3; count++)
+					{
+						float x = Player.position.X + (float)Main.rand.Next(-400, 400);
+						float y = Player.position.Y - (float)Main.rand.Next(500, 800);
+						Vector2 vector = new Vector2(x, y);
+						float speedX = Player.position.X + (float)(Player.width / 2) - vector.X;
+						float speedY = Player.position.Y + (float)(Player.height / 2) - vector.Y;
+						speedX += (float)Main.rand.Next(-100, 101);
+						float num18 = (float)Math.Sqrt(speedX * speedX + speedY * speedY);
+						num18 = 23f / num18;
+						speedX *= num18;
+						speedY *= num18;
+						int type = 726;
+
+						Item item = Player.starCloakItem;
+						if (Player.starCloakItem_starVeilOverrideItem != null)
+						{
+							item = Player.starCloakItem_starVeilOverrideItem;
+							type = 725;
+						}
+
+						if (Player.starCloakItem_beeCloakOverrideItem != null)
+						{
+							item = Player.starCloakItem_beeCloakOverrideItem;
+							type = 724;
+						}
+
+						if (Player.starCloakItem_manaCloakOverrideItem != null)
+						{
+							item = Player.starCloakItem_manaCloakOverrideItem;
+							type = 723;
+						}
+
+						int starDamage = 75;
+						if (Main.masterMode)
+							starDamage *= 3;
+						else if (Main.expertMode)
+							starDamage *= 2;
+
+						Projectile.NewProjectile(Player.GetSource_Accessory(item), x, y, speedX, speedY, type, starDamage, 5f, Player.whoAmI, 0f, Player.position.Y);
+					}
+				}
 			}
 		}
 

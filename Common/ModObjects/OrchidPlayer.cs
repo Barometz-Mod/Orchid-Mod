@@ -62,6 +62,8 @@ namespace OrchidMod.Common.ModObjects
 		public ref int DoubleTappedLeft => ref DoubleTapped[3];
 		/// <summary>List of current Orchid Titanium Shards owned by this player.</summary>
 		public List<Projectile> TitaniumShards = new List<Projectile>();
+		/// <summary>If true, all player Drawlayers will not render.</summary>
+		public bool HideAllDrawLayers = false;
 
 		// Equipment Fields (General)
 
@@ -124,6 +126,17 @@ namespace OrchidMod.Common.ModObjects
 			}
 		}
 
+		public override void HideDrawLayers(PlayerDrawSet drawInfo)
+		{
+			if (HideAllDrawLayers)
+			{
+				foreach (PlayerDrawLayer layer in PlayerDrawLayerLoader.DrawOrder)
+				{
+					layer.Hide();
+				}
+			}
+		}
+
 		public override void ResetEffects()
 		{
 			Timer++;
@@ -134,6 +147,7 @@ namespace OrchidMod.Common.ModObjects
 			remoteCopterPet = false;
 			OrchidDoubleDash = false;
 			OrchidDodgeChance = 1f;
+			HideAllDrawLayers = false;
 
 			if (OrchidDoubleDashCD > 0)
 			{
@@ -219,18 +233,12 @@ namespace OrchidMod.Common.ModObjects
 			LastHitNPC = target;
 		}
 
-		public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
+		public override void ModifyHurt(ref Player.HurtModifiers modifiers)
 		{
 			if (OrchidDamageResistance > 0) modifiers.FinalDamage /= OrchidDamageResistance;
 			else modifiers.FinalDamage *= 9999;
 			//idk if we'd ever have a situation where it's possible to hit -100% damage resistance but this makes it kill the player instead of throwing an exception
 			//seems fitting anyway
-		}
-
-		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
-		{
-			if (OrchidDamageResistance > 0) modifiers.FinalDamage /= OrchidDamageResistance;
-			else modifiers.FinalDamage *= 9999;
 		}
 
 		public override bool FreeDodge(Player.HurtInfo info)

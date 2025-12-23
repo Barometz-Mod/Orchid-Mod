@@ -158,9 +158,10 @@ namespace OrchidMod.Content.Guardian
 					Projectile.rotation = 0f;
 
 					Projectile.ai[0]--;
+
 					if (owner.immune)
 					{
-						if (owner.eocHit != -1)
+						if (owner.eocHit != -1 && owner.eocDash > 0)
 						{
 							guardian.DoParryItemParry(Main.npc[owner.eocHit]); // this resets both gauntlets' parry state
 						}
@@ -218,7 +219,7 @@ namespace OrchidMod.Content.Guardian
 					{ // Slam just started, make projectile
 						int damage = guardian.GetGuardianDamage(guardianItem.Item.damage);
 						bool charged = Projectile.ai[0] == -2f;
-						if (guardianItem.OnPunch(owner, guardian, Projectile, ref charged, ref damage))
+						if (guardianItem.OnPunch(owner, guardian, Projectile, OffHandGauntlet, Ding, ref charged, ref damage))
 						{
 							int projectileType = ModContent.ProjectileType<GauntletPunchProjectile>();
 							float strikeVelocity = guardianItem.StrikeVelocity * (charged ? 1f : 0.75f) * guardianItem.Item.GetGlobalItem<GuardianPrefixItem>().GetSlamDistance() * owner.GetTotalAttackSpeed(DamageClass.Melee);
@@ -269,7 +270,7 @@ namespace OrchidMod.Content.Guardian
 				{
 					if (Charging)
 					{
-						guardian.GuardianItemCharge += 30f / GauntletItem.useTime * (owner.GetTotalAttackSpeed(DamageClass.Melee) * 2f - 1f);
+						guardian.GuardianItemCharge += 30f / GauntletItem.useTime * (owner.GetTotalAttackSpeed(DamageClass.Melee) * 2f - 1f) * guardianItem.ChargeSpeedMultiplier;
 						if (guardian.GuardianItemCharge > 180f)
 						{
 							if (!Ding && IsLocalOwner)
@@ -280,11 +281,11 @@ namespace OrchidMod.Content.Guardian
 							}
 							guardian.GuardianItemCharge = 180f;
 						}
-						else if (CanInstantSlam()) guardian.SlamCostUI = 1;
+						else if (CanInstantSlam(guardianItem)) guardian.SlamCostUI = 1;
 
 						if ((ModContent.GetInstance<OrchidClientConfig>().GuardianSwapGauntletImputs ? !Main.mouseRight : !Main.mouseLeft) && owner.whoAmI == Main.myPlayer)
 						{
-							if ((CanInstantSlam() || ModContent.GetInstance<OrchidClientConfig>().GuardianGauntletAlwaysSlam) && guardian.UseSlam(1, true))
+							if ((CanInstantSlam(guardianItem) || ModContent.GetInstance<OrchidClientConfig>().GuardianGauntletAlwaysSlam) && guardian.UseSlam(1, true))
 							{ // Consume a slam to fully charge if the player has one
 								guardian.UseSlam();
 								guardian.GuardianItemCharge = 180f;
@@ -336,22 +337,26 @@ namespace OrchidMod.Content.Guardian
 				}
 			}
 
-			guardianItem.ExtraAIGauntlet(Projectile);
+			guardianItem.ExtraAIGauntlet(owner, guardian, Projectile, OffHandGauntlet);
 		}
 
-		public bool CanInstantSlam()
+		public bool CanInstantSlam(OrchidModGuardianGauntlet gauntlet)
 		{
 			Player player = Main.player[Projectile.owner];
 			OrchidGuardian guardian = player.GetModPlayer<OrchidGuardian>();
 
-			if (guardian.ChargeHoldTimer > ModContent.GetInstance<OrchidClientConfig>().GuardianMaxHoldTimer)
+			if (guardian.GuardianItemCharge < 180f)
 			{
-				return true;
+				if (guardian.ChargeHoldTimer > ModContent.GetInstance<OrchidClientConfig>().GuardianMaxHoldTimer)
+				{
+					return true;
+				}
+				else
+				{
+					return guardian.ChargeHoldTimer > ModContent.GetInstance<OrchidClientConfig>().GuardianMinHoldTimer && (guardian.GuardianItemCharge * gauntlet.ChargeSpeedMultiplier) > (70 * player.GetTotalAttackSpeed(DamageClass.Melee) - player.HeldItem.useTime) / 2.5f;
+				}
 			}
-			else
-			{
-				return guardian.ChargeHoldTimer > ModContent.GetInstance<OrchidClientConfig>().GuardianMinHoldTimer && guardian.GuardianItemCharge > (70 * player.GetTotalAttackSpeed(DamageClass.Melee) - player.HeldItem.useTime) / 2.5f && guardian.GuardianItemCharge < 180f;
-			}
+			else return false;
 		}
 
 		public override void OnKill(int timeLeft)
@@ -382,7 +387,7 @@ namespace OrchidMod.Content.Guardian
 			var player = Main.player[Projectile.owner];
 			var color = Lighting.GetColor((int)(Projectile.Center.X / 16f), (int)(Projectile.Center.Y / 16f), Color.White);
 
-			if (guardianItem.PreDrawGauntlet(spriteBatch, Projectile, player, ref color))
+			if (guardianItem.PreDrawGauntlet(spriteBatch, Projectile, player, OffHandGauntlet, ref color))
 			{
 				if (guardianItem.hasArm)
 				{
@@ -404,7 +409,7 @@ namespace OrchidMod.Content.Guardian
 					spriteBatch.Draw(textureShoulder, shouldePosition, drawRectangleShoulder, color, 0f, originShoulder, Projectile.scale, effectShoulder, 0f);
 				}
 
-				Texture2D texture = guardianItem.GetGauntletTexture(OffHandGauntlet, out Rectangle? drawRectangle);
+				Texture2D texture = guardianItem.GetGauntletTexture(player, Projectile, OffHandGauntlet, out Rectangle? drawRectangle);
 
 				var effect = SpriteEffects.None;
 				if (player.direction != 1)
@@ -440,7 +445,7 @@ namespace OrchidMod.Content.Guardian
 				spriteBatch.Draw(texture, drawPosition, drawRectangle, color, drawRotation, origin, Projectile.scale, effect, 0f);
 
 			}
-			guardianItem.PostDrawGauntlet(spriteBatch, Projectile, player, color);
+			guardianItem.PostDrawGauntlet(spriteBatch, Projectile, player, OffHandGauntlet, color);
 
 			return false;
 		}

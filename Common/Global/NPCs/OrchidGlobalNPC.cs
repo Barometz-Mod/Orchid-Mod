@@ -1,16 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ModLoader;
 using Terraria.ID;
 using OrchidMod.Content.Alchemist.Misc;
 using OrchidMod.Content.Gambler.Misc;
-using OrchidMod.Content.Guardian;
 using OrchidMod.Content.Guardian.Buffs.Debuffs;
-using OrchidMod.Content.Guardian.Misc;
 using OrchidMod.Content.Guardian.Projectiles.Misc;
-using OrchidMod.Common.ModSystems;
 
 namespace OrchidMod.Common.Global.NPCs
 {
@@ -132,29 +127,6 @@ namespace OrchidMod.Common.Global.NPCs
 			if (GamblerHit && Main.rand.NextBool(10))
 			{
 				Item.NewItem(npc.GetSource_Death(), npc.getRect(), ModContent.ItemType<Chip>());
-			}
-
-			if (GuardianHit && !npc.SpawnedFromStatue && OrchidMiscModSystem.SlamDropCooldown >= 300)
-			{ // Slam pickups drop logic (every 10 sec, not if there are more than 2 nearby slams)
-				OrchidMiscModSystem.SlamDropCooldown = 0;
-				int slamType = ModContent.ItemType<Slam>();
-				int count = 0;
-				foreach (Item item in Main.item)
-				{
-					if (item.type == slamType && item.Center.Distance(npc.Center) < 160f && item.active)
-					{
-						count++;
-						if (count == 3)
-						{
-							break;
-						}
-					}
-				}
-
-				if (count < 3)
-				{
-					Item.NewItem(npc.GetSource_Death(), npc.getRect(), slamType);
-				}
 			}
 		}
 	}

@@ -348,6 +348,11 @@ namespace OrchidMod.Common.Global.NPCs
 						npcLoot.Add(ItemDropRule.ByCondition(EnableContentShapeshifter, ItemType<SageBat>(), 100));
 					}
 					break;
+				case NPCID.SporeSkeleton:
+					{
+						npcLoot.Add(ItemDropRule.Common(ItemType<GlowingMushroomGauntlet>(), 40));
+					}
+					break;
 				case NPCID.ManEater:
 				case NPCID.Snatcher:
 					{
@@ -511,6 +516,16 @@ namespace OrchidMod.Common.Global.NPCs
 				if (thoriumMod.IsNPCTypeEquals("ThePrimeScouter", npc.type))
 				{
 					npcLoot.Add(ItemDropRule.ByCondition(NotExpert, ItemType<ThoriumStarScouterStandard>(), 6)); // 1 in 7 is brutal damn
+				}
+
+				if (thoriumMod.IsNPCTypeEquals("Viscount", npc.type))
+				{
+					npcLoot.Add(ItemDropRule.ByCondition(NotExpert, ItemType<ThoriumViscountQuarterstaff>(), 6)); // 1 in 7 is brutal damn
+				}
+
+				if (thoriumMod.IsNPCTypeEquals("Illusionist", npc.type))
+				{
+					npcLoot.Add(ItemDropRule.Common(ItemType<ThoriumIllusionistPavise>()));
 				}
 
 				// TheGrandThunderBirdv2 QueenJelly GraniteEnergyStorm Viscount FallenDeathBeholder BoreanStriderPopped Lich Abyssion PatchWerk
