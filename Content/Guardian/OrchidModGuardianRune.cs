@@ -83,7 +83,7 @@ namespace OrchidMod.Content.Guardian
 						}
 					}
 
-					var index = Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center.X, player.Center.Y, 0f, 0f, projectileType, 0, 0f, player.whoAmI);
+					var index = Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center.X, player.Center.Y, 0f, 0f, projectileType, 0, 0f, player.whoAmI);
 
 					var proj = Main.projectile[index];
 					if (proj.ModProjectile is not GuardianRuneAnchor rune)
@@ -178,7 +178,7 @@ namespace OrchidMod.Content.Guardian
 
 		public Projectile NewRuneProjectile(Player player, OrchidGuardian guardian, int duration, int type, int damage, float knockback, int critChance, float distance = 0f, float angle = 0f, float ai2 = 0f)
 		{
-			Projectile projectile = Main.projectile[Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, distance, angle, ai2)];
+			Projectile projectile = Main.projectile[Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, distance, angle, ai2)];
 			projectile.timeLeft = duration;
 			projectile.CritChance = critChance;
 			projectile.netUpdate = true;

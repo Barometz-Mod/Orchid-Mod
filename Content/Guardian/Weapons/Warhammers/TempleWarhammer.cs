@@ -3,7 +3,6 @@ using OrchidMod.Content.Guardian.Projectiles.Warhammers;
 using OrchidMod.Utilities;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -15,6 +14,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 			MoRSupportUtils.Elements.Fire,
 			MoRSupportUtils.Elements.Earth
 		];
+		// TODO - does not seem to properly inherit, check later
 		public override List<short> MoRElementsProj => [..MoRElements, MoRSupportUtils.Elements.Arcane];
 
 		public override void SafeSetDefaults()
@@ -47,7 +47,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 			if (Main.rand.NextBool(15) && !weak && IsLocalPlayer(player))
 			{
 				Vector2 dir = Vector2.Normalize(projectile.velocity.RotatedByRandom(MathHelper.ToRadians(45f))) * (7f + Main.rand.NextFloat(8f) * (projectile.timeLeft > 600 - Range ? 1 : -1));
-				Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), projectile.Center, dir, ModContent.ProjectileType<TempleWarhammerProj>(), (int)(projectile.damage * 0.75f), Item.knockBack, player.whoAmI);
+				Projectile.NewProjectile(Item.GetSource_FromThis(), projectile.Center, dir, ModContent.ProjectileType<TempleWarhammerProj>(), (int)(projectile.damage * 0.75f), Item.knockBack, player.whoAmI);
 			}
 
 			return true;
@@ -59,7 +59,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 			{
 				int type = ModContent.ProjectileType<TempleWarhammerProj>();
 				Vector2 dir = Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi) * (7f + Main.rand.NextFloat(8f));
-				Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), projectile.Center, dir, type, (int)(projectile.damage * 0.6f), Item.knockBack, player.whoAmI);
+				Projectile.NewProjectile(Item.GetSource_FromThis(), projectile.Center, dir, type, (int)(projectile.damage * 0.6f), Item.knockBack, player.whoAmI);
 			}
 		}
 
@@ -69,7 +69,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 			{
 				int type = ModContent.ProjectileType<TempleWarhammerProj>();
 				Vector2 dir = Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi) * (7f + Main.rand.NextFloat(8f));
-				Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), projectile.Center, dir, type, (int)(projectile.damage * 0.6f), Item.knockBack, player.whoAmI);
+				Projectile.NewProjectile(Item.GetSource_FromThis(), projectile.Center, dir, type, (int)(projectile.damage * 0.6f), Item.knockBack, player.whoAmI);
 			}
 
 			for (int i = 0; i < 10; i++)
@@ -89,7 +89,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 				for (int i = 0; i < nb; i++)
 				{
 					Vector2 dir = Vector2.UnitY.RotatedBy(MathHelper.TwoPi / 6f * i).RotatedByRandom(MathHelper.ToRadians(15f)) * (7f + Main.rand.NextFloat(8f));
-					Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), projectile.Center, dir, type, (int)(projectile.damage * 0.6f), Item.knockBack, player.whoAmI);
+					Projectile.NewProjectile(Item.GetSource_FromThis(), projectile.Center, dir, type, (int)(projectile.damage * 0.6f), Item.knockBack, player.whoAmI);
 				}
 			}
 

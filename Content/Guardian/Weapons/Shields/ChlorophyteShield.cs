@@ -2,7 +2,6 @@
 using OrchidMod.Utilities;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace OrchidMod.Content.Guardian.Weapons.Shields
@@ -37,13 +36,14 @@ namespace OrchidMod.Content.Guardian.Weapons.Shields
 				for (int i = 0; i < 1 + Main.rand.Next(3); i++)
 				{
 					Vector2 dir = Vector2.Normalize(Main.MouseWorld - player.Center).RotatedByRandom(MathHelper.ToRadians(10f)) * (8f + Main.rand.NextFloat(4f));
-					int newProjId = Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), anchor.Center, dir, type, (int)(shield.damage * 0.4f), Item.knockBack, player.whoAmI);
+					int newProjId = Projectile.NewProjectile(Item.GetSource_FromThis(), anchor.Center, dir, type, (int)(shield.damage * 0.4f), Item.knockBack, player.whoAmI);
 					Projectile newProjectile = Main.projectile[newProjId];
 					ApplyMoRElements(newProjectile);
 				}
 			}
 		}
 
+		// TODO - check if ProjectileID.SporeCloud already has elements
 		private void ApplyMoRElements(Projectile projectile)
 		{
 			MoRElementsProj.ForEach(elementId

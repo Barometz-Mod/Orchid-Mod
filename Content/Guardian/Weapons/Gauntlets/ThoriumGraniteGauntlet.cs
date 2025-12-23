@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -101,7 +100,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Gauntlets
 					//player.GetModPlayer<OrchidPlayer>().PlayerImmunity = player.immuneTime = InvincibilityDuration;
 					//player.immune = true;
 					guardian.DoParryItemParry(null);
-					Projectile counterProj = Projectile.NewProjectileDirect(new EntitySource_ItemUse(player, Item), projectile.Center + strikeVelocity * 4, Vector2.Zero, ModContent.ProjectileType<ThoriumGraniteGauntletProjectile>(), Math.Clamp(highestDeflectedDamage, punchDamage, 1000), Item.knockBack, projectile.owner);
+					Projectile counterProj = Projectile.NewProjectileDirect(Item.GetSource_FromThis(), projectile.Center + strikeVelocity * 4, Vector2.Zero, ModContent.ProjectileType<ThoriumGraniteGauntletProjectile>(), Math.Clamp(highestDeflectedDamage, punchDamage, 1000), Item.knockBack, projectile.owner);
 					counterProj.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
 					if (!instantExplode)
 					{

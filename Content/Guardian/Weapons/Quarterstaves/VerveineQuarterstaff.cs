@@ -3,7 +3,6 @@ using OrchidMod.Content.Guardian.Projectiles.Quarterstaves;
 using OrchidMod.Utilities;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -42,7 +41,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 			{
 				//"fart"
 				//      -Verveine
-				Projectile newProjectile = Projectile.NewProjectileDirect(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ModContent.ProjectileType<VerveineFart>(), (int)(Item.damage * 0.75f), Item.knockBack * 0.25f, projectile.owner);
+				Projectile newProjectile = Projectile.NewProjectileDirect(Item.GetSource_FromAI(), player.Center, Vector2.Zero, ModContent.ProjectileType<VerveineFart>(), (int)(Item.damage * 0.75f), Item.knockBack * 0.25f, projectile.owner);
 				newProjectile.CritChance = guardian.GetGuardianCrit(Item.crit);
 			}
 		}

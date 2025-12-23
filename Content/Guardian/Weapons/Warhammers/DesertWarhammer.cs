@@ -4,7 +4,6 @@ using OrchidMod.Utilities;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -55,7 +54,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Warhammers
 					- new Vector2(0, 0.2f * (Main.rand.NextFloat(2, 4) - i));
 				
 				if (IsLocalPlayer(player))
-					Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), projectile.Center, velocity, type, guardian.GetGuardianDamage(Item.damage * 0.35f), 1f, player.whoAmI);
+					Projectile.NewProjectile(player.GetSource_ItemUse(Item), projectile.Center, velocity, type, guardian.GetGuardianDamage(Item.damage * 0.35f), 1f, player.whoAmI);
 				for (int j = 0; j < 2; j++)
 				{
 					Dust.NewDust(projectile.position, projectile.width, projectile.height, Main.rand.NextBool() ? DustID.Gold : DustID.Dirt, hitVelocity.X * 0.5f, -1);

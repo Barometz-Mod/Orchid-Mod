@@ -3,7 +3,6 @@ using OrchidMod.Content.Guardian.Projectiles.Quarterstaves;
 using OrchidMod.Utilities;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -110,7 +109,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 			int damage = guardian.GetGuardianDamage(Item.damage * 0.66f);
 			Vector2 position = guardian.Player.Center + Vector2.UnitY.RotatedByRandom(MathHelper.Pi) * Main.rand.NextFloat(32f, 160f);
 			int projectileType = ModContent.ProjectileType<SpectreQuarterstaffProj>();
-			Projectile newProjectile = Projectile.NewProjectileDirect(new EntitySource_ItemUse(guardian.Player, Item), position, Vector2.Zero, projectileType, damage, 0f, guardian.Player.whoAmI);
+			Projectile newProjectile = Projectile.NewProjectileDirect(guardian.Player.GetSource_ItemUse(Item), position, Vector2.Zero, projectileType, damage, 0f, guardian.Player.whoAmI);
 			newProjectile.CritChance = guardian.GetGuardianCrit(Item.crit);
 			newProjectile.netUpdate = true;
 		}

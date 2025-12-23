@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -290,7 +289,7 @@ namespace OrchidMod.Content.Guardian
 				int[] indexes = [-1, -1];
 				for (int i = 0; i < 2; i++)
 				{
-					var index = Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center.X, player.Center.Y, 0f, 0f, projectileType, 0, 0f, player.whoAmI);
+					var index = Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center.X, player.Center.Y, 0f, 0f, projectileType, 0, 0f, player.whoAmI);
 
 					var proj = Main.projectile[index];
 					if (proj.ModProjectile is not GuardianGauntletAnchor gauntlet)

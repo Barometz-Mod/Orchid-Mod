@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -83,7 +82,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 			{
 				SoundEngine.PlaySound(SoundID.Item66, player.Center);
 				Vector2 vel = -Vector2.UnitX.RotatedBy((player.Center - Main.MouseWorld).ToRotation()) * Item.shootSpeed;
-				Projectile.NewProjectileDirect(new EntitySource_ItemUse(player, Item), player.Center, vel, ModContent.ProjectileType<ThoriumAquaiteQuarterstaffProjectile>(), (int)(Item.damage * 2.5f), Item.knockBack * 2, projectile.owner);
+				Projectile.NewProjectileDirect(Item.GetSource_FromAI(), player.Center, vel, ModContent.ProjectileType<ThoriumAquaiteQuarterstaffProjectile>(), (int)(Item.damage * 2.5f), Item.knockBack * 2, projectile.owner);
 			}
 		}
 

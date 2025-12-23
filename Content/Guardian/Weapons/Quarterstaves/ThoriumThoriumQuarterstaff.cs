@@ -4,7 +4,6 @@ using OrchidMod.Content.Shapeshifter;
 using OrchidMod.Utilities;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -48,7 +47,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 				int projectileType = OrchidMod.ThoriumMod.Find<ModProjectile>("ThoriumSpark").Type;
 				int damage = (int)(Item.damage * 0.25f);
 				Vector2 velocity = Vector2.UnitY.RotatedByRandom(MathHelper.Pi) * 10f;
-				Projectile newProjectile = Projectile.NewProjectileDirect(new EntitySource_ItemUse(player, Item), target.Center, velocity, projectileType, damage, Item.knockBack, projectile.owner);
+				Projectile newProjectile = Projectile.NewProjectileDirect(Item.GetSource_FromAI(), target.Center, velocity, projectileType, damage, Item.knockBack, projectile.owner);
 				newProjectile.CritChance = guardian.GetGuardianCrit(Item.crit);
 				newProjectile.DamageType = ModContent.GetInstance<GuardianDamageClass>();
 				ApplyMoRElements(newProjectile);
@@ -66,7 +65,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Quarterstaves
 				for (int i = 0; i < amount; i++)
 				{
 					Vector2 velocity = Vector2.UnitY.RotatedByRandom(MathHelper.Pi) * 10f;
-					Projectile newProjectile = Projectile.NewProjectileDirect(new EntitySource_ItemUse(player, Item), target.Center, velocity, projectileType, damage, Item.knockBack, projectile.owner);
+					Projectile newProjectile = Projectile.NewProjectileDirect(Item.GetSource_FromAI(), target.Center, velocity, projectileType, damage, Item.knockBack, projectile.owner);
 					newProjectile.CritChance = guardian.GetGuardianCrit(Item.crit);
 					newProjectile.DamageType = ModContent.GetInstance<GuardianDamageClass>();
 					ApplyMoRElements(newProjectile);

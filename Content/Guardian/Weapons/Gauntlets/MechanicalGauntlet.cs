@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -90,7 +89,7 @@ namespace OrchidMod.Content.Guardian.Weapons.Gauntlets
 				guardian.modPlayer.ForcedVelocityUpkeep = 0.3f;
 
 				int projectileType = ModContent.ProjectileType<MechanicalGauntletProjectile>();
-				Projectile newProjectile = Projectile.NewProjectileDirect(new EntitySource_ItemUse(player, Item), projectile.Center, guardian.modPlayer.ForcedVelocityVector, projectileType, guardian.GetGuardianDamage(Item.damage) * 2, Item.knockBack, player.whoAmI);
+				Projectile newProjectile = Projectile.NewProjectileDirect(Item.GetSource_FromAI(), projectile.Center, guardian.modPlayer.ForcedVelocityVector, projectileType, guardian.GetGuardianDamage(Item.damage) * 2, Item.knockBack, player.whoAmI);
 				newProjectile.CritChance = (int)(player.GetCritChance<GuardianDamageClass>() + player.GetCritChance<GenericDamageClass>() + Item.crit);
 
 				for (int i = 0; i < 20; i++)
